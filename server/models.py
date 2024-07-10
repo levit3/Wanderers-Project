@@ -47,6 +47,25 @@ class Destination(db.Model, SerializerMixin):
 	
 	reviews = db.relationship('Review', back_populates = 'destination')
  
+	@validates('name')
+	def validate_name(self, key, name):
+		if len(name) < 5:
+			raise ValueError('Name must be at least 5 characters long')
+		return name
+		
+	@validates('location')
+	def validate_location(self, key, location):
+		if len(location) < 5:
+			raise ValueError('Location must be at least 5 characters long')
+		return location
+
+		
+	@validates('description')
+	def validate_description(self, key, description):
+		if len(description) < 10:
+			raise ValueError('Description must be at least 10 characters long')
+		return description
+ 
 class Review(db.Model, SerializerMixin):
   __tablename__ = 'reviews'
   
