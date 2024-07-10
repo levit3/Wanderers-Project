@@ -102,6 +102,37 @@ class DestinationByID(Resource):
         
         return make_response({'error': 'Destination not found'}, 404)
     
+class Reviews(Resource):
+    
+    def get(self):
+        reviews = [review.to_dict() for review in Review.query.all()]
+        return make_response(reviews, 200)
+    
+    def post(self):
+        data = request.json
+        review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
+        db.session.add(review)
+        db.session.commit()
+        return make_response(review.to_dict(), 201)
+    
+    def delete(self, id):
+        review = Review.query.filter_by(id= id).first()
+        if review:
+            db.session.delete(review)
+            db.session.commit()
+            return make_response(review.to_dict(), 200)
+        else:
+            return make_response({'error': 'Review not found'}, 404)
+        
+    def patch(self, id):
+        review = Review.query.filter_by(id=id).first()
+        for attr in request.json:
+            setattr(review, attr, request.json[attr])
+            
+        db.session.add(review)
+        db.session.commit()
+        return make_response(review.to_dict(), 200)
+    
 
 
 
