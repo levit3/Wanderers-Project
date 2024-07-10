@@ -77,3 +77,15 @@ class Review(db.Model, SerializerMixin):
   
   user = db.relationship('User', back_populates='reviews')
   destination = db.relationship('Destination', back_populates='reviews')
+  
+  @validates('comment')
+  def validate_comment(self, key, comment):
+    if len(comment) < 5:
+      raise ValueError('Comment must be at least 5 characters long')
+    return comment
+  
+  @validates(rating)
+  def validate_rating(self, key, rating):
+    if 5 < rating < 0:
+      raise ValueError('Rating must be between 1 and 5')
+    return rating
