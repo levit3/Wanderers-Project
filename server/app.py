@@ -92,6 +92,16 @@ class Destinations(Resource):
         db.session.commit()
         return make_response(destination.to_dict(), 200)
     
+class DestinationByID(Resource):
+    
+    def get(self,id):
+        destination = Destination.query.filter_by(id=id).first()
+        
+        if destination:
+            return make_response(destination.to_dict(), 200)
+        
+        return make_response({'error': 'Destination not found'}, 404)
+    
 
 
 
