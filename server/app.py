@@ -133,6 +133,23 @@ class Reviews(Resource):
         db.session.commit()
         return make_response(review.to_dict(), 200)
     
+class ReviewByID(Resource):
+    
+    def get(self, id):
+        review = Review.query.filter_by(id=id).first()
+        
+        if review:
+            return make_response(review.to_dict(), 200)
+        
+        return make_response({'error': 'Review not found'}, 404)
+    
+api.add_resource(Users, '/users')
+api.add_resource(Destinations, '/destinations')
+api.add_resource(Reviews, '/reviews')
+api.add_resource(UserByID, '/users/<int:id>')
+api.add_resource(DestinationByID, '/destinations/<int:id>')
+api.add_resource(ReviewByID, '/reviews/<int:id>')
+    
 
 
 
