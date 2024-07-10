@@ -2,13 +2,15 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 import re 
+from flask import url_for
 
 from config import db
 
 # Models go here!
 class User(db.Model, SerializerMixin):
 	__tablename__ = 'users'
-
+ 
+	serialize_rules = ['-reviews.user', '-destinations.destination']
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String, unique=True, nullable=False)
 	email = db.Column(db.String, unique=True, nullable=False)
@@ -66,6 +68,15 @@ class Destination(db.Model, SerializerMixin):
 		if len(description) < 10:
 			raise ValueError('Description must be at least 10 characters long')
 		return description
+
+	def to_dict(self):
+			return {
+					'id': self.id,
+					'name': self.name,
+					'description': self.description,
+					'location': self.location,
+					'image_url': url_for('uploads', filename=self.image, _external=True)
+			}
  
 class Review(db.Model, SerializerMixin):
   __tablename__ = 'reviews'
@@ -78,6 +89,8 @@ class Review(db.Model, SerializerMixin):
   
   user = db.relationship('User', back_populates='reviews')
   destination = db.relationship('Destination', back_populates='reviews')
+  
+  serialize_rules = ['-user.reviews', '-destination.reviews']
   
   @validates('comment')
   def validate_comment(self, key, comment):

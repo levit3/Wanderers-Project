@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from flask import request, make_response, send_from_directory
 from flask_restful import Resource
 
 # Local imports
@@ -101,6 +101,11 @@ class DestinationByID(Resource):
             return make_response(destination.to_dict(), 200)
         
         return make_response({'error': 'Destination not found'}, 404)
+    
+    
+@app.route('/uploads/<filename>')
+def uploads(filename):
+    return send_from_directory('uploads', filename)
     
 class Reviews(Resource):
     
