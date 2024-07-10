@@ -51,6 +51,16 @@ class Users(Resource):
         else:
             return make_response({'error': 'User not found'}, 404)
 
+class UserByID(Resource):   
+    
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        
+        if user:
+            return make_response(user.to_dict(), 200)
+        
+        return make_response({'error': 'User not found'}, 404)
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
