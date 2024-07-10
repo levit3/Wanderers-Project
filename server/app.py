@@ -3,13 +3,16 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response, send_from_directory
+from flask import request, make_response, send_from_directory, session
 from flask_restful import Resource
+
 
 # Local imports
 from config import app, db, api
 # Add your model imports
 from models import db, User, Destination, Review
+
+app.secret_key = b'/O\xf5\xa8\xf1\xc5\x97\xdcM\xcc\xd0\xf0\xf4\r\xc7f'
 
 
 
@@ -148,12 +151,46 @@ class ReviewByID(Resource):
         
         return make_response({'error': 'Review not found'}, 404)
     
+    
+class Login(Resource):
+    
+    def post(self):
+        username = request.json.get('username')
+        user = User.query.filter_by(username=username).first()
+        if user:
+            if user.authenticate(request.json.get('password')):
+                session['user_id'] = user.id
+                return user.to_dict(), 200
+            else:
+                return {'error': 'Incorrect password'}, 401
+        else:
+            return {'error': 'User not found'}, 404
+        
+class Logout(Resource):
+    
+    def delete(self):
+        session['user_id'] = None
+        return {'message': 'Logged out successfully'}, 204
+        
+class CheckSession(Resource):
+    
+    def post(self):
+        user = User.query.filter_by(id= session.get('user_id')).first()
+        if user:
+            return user.to_dict(), 200
+        else:
+            return {'error': 'Session expired'}, 401
+    
+    
 api.add_resource(Users, '/users')
 api.add_resource(Destinations, '/destinations')
 api.add_resource(Reviews, '/reviews')
 api.add_resource(UserByID, '/users/<int:id>')
 api.add_resource(DestinationByID, '/destinations/<int:id>')
 api.add_resource(ReviewByID, '/reviews/<int:id>')
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
+api.add_resource(CheckSession, '/check-session')
     
 
 

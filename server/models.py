@@ -1,10 +1,12 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 import re 
 from flask import url_for
 
-from config import db
+from config import db, bcrypt
+
 
 # Models go here!
 class User(db.Model, SerializerMixin):
@@ -14,7 +16,7 @@ class User(db.Model, SerializerMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String, unique=True, nullable=False)
 	email = db.Column(db.String, unique=True, nullable=False)
-	password = db.Column(db.String, nullable=False)
+	_password = db.Column(db.String, nullable=False)
 
 	reviews = db.relationship('Review', back_populates = 'user')
 	destinations = association_proxy('reviews', 'destination')
@@ -31,6 +33,19 @@ class User(db.Model, SerializerMixin):
 			raise ValueError('Password must be at least 8 characters long')
 		return password
 
+	@hybrid_property
+	def password(self):
+			return self._password
+ 
+	@password.setter
+	def password(self, password):
+		password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+		self._password = password_hash.decode('utf-8')
+  
+	@staticmethod
+	def authenticate(self, password):
+		return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
+   
 	@validates('username')
 	def validate_username(self, key, username):
 		user = User.query.filter_by(username=username).first()
