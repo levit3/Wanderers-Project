@@ -57,10 +57,14 @@ class UserByID(Resource):
     def patch(self, id):
         user = User.query.filter_by(id= id).first()
         if user:
-            for attr in request.json:
-                setattr(user, attr, request.json[attr])
-            db.session.add(user)
-            db.session.commit()
+            try:
+                for attr in request.json:
+                    setattr(user, attr, request.json[attr])
+                db.session.add(user)
+                db.session.commit()
+                return make_response(user.to_dict(), 200)
+            except ValueError as e:
+                return make_response({'error': str(e)}, 400)
         else:
             return make_response({'error': 'User not found'}, 404)
     
@@ -79,7 +83,6 @@ class Destinations(Resource):
             return make_response(destination.to_dict(), 201)
         except ValueError as e:
             return make_response({'error': str(e)}, 400)
-    
     
 class DestinationByID(Resource):
     
@@ -103,18 +106,18 @@ class DestinationByID(Resource):
     def patch(self, id):
         destination = Destination.query.filter_by(id=id).first()
         if destination:
-            for attr in request.json:
-                setattr(destination, attr, request.json[attr])
-        
-            db.session.add(destination)
-            db.session.commit()
-            return make_response(destination.to_dict(), 200)
-        
+            try:
+                for attr in request.json:
+                    setattr(destination, attr, request.json[attr])
+            
+                db.session.add(destination)
+                db.session.commit()
+                return make_response(destination.to_dict(), 200)
+            except ValueError as e:
+                return make_response({'error': str(e)}, 400)
         else:
             return make_response({'error': 'Destination not found'}, 404)
       
-    
-    
 @app.route('/static/uploads/<filename>')
 def uploads(filename):
     return send_from_directory('uploads', filename)
@@ -139,7 +142,6 @@ class Reviews(Resource):
         else:
             return make_response({'error': 'You need to be logged in to post a review'}, 401)
 
-    
 class ReviewByID(Resource):
     
     def get(self, id):
@@ -161,14 +163,16 @@ class ReviewByID(Resource):
         
     def patch(self, id):
         review = Review.query.filter_by(id=id).first()
-        for attr in request.json:
-            setattr(review, attr, request.json[attr])
-            
-        db.session.add(review)
-        db.session.commit()
-        return make_response(review.to_dict(), 200)
-    
-    
+        if review:
+            try:
+                for attr in request.json:
+                    setattr(review, attr, request.json[attr])
+                db.session.add(review)
+                db.session.commit()
+                return make_response(review.to_dict(), 200)
+            except ValueError as e:
+                return make_response({'error': str(e)}, 400)
+      
 class Login(Resource):
     
     def post(self):
