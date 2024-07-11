@@ -15,9 +15,6 @@ from models import db, User, Destination, Review
 app.secret_key = b'/O\xf5\xa8\xf1\xc5\x97\xdcM\xcc\xd0\xf0\xf4\r\xc7f'
 
 
-
-# Views go here!
-
 @app.route('/')
 def index():
     return '<h1>Wanderers</h1>'
@@ -30,29 +27,13 @@ class Users(Resource):
     
     def post(self):
         data = request.get_json()
-        user = User(username=data['username'], email=data['email'], password=data['password'])
-        db.session.add(user)
-        db.session.commit()
-        return make_response(user.to_dict(), 201)
-    
-    def delete(self, id):
-        user = User.query.filter_by(id= id).first()
-        if user:
-            db.session.delete(user)
-            db.session.commit()
-            return make_response(user.to_dict(), 200)
-        else:
-            return make_response({'error': 'User not found'}, 404)
-        
-    def patch(id):
-        user = User.query.filter_by(id= id).first()
-        if user:
-            for attr in request.json:
-                setattr(user, attr, request.json[attr])
+        try:
+            user = User(username=data['username'], email=data['email'], password=data['password'])
             db.session.add(user)
             db.session.commit()
-        else:
-            return make_response({'error': 'User not found'}, 404)
+            return make_response(user.to_dict(), 201)
+        except ValueError as e:
+            return make_response({'error': str(e)}, 400)
 
 class UserByID(Resource):   
     
@@ -64,6 +45,25 @@ class UserByID(Resource):
         
         return make_response({'error': 'User not found'}, 404)
     
+    def delete(self, id):
+        user = User.query.filter_by(id= id).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return make_response(user.to_dict(), 200)
+        else:
+            return make_response({'error': 'User not found'}, 404)
+        
+    def patch(self, id):
+        user = User.query.filter_by(id= id).first()
+        if user:
+            for attr in request.json:
+                setattr(user, attr, request.json[attr])
+            db.session.add(user)
+            db.session.commit()
+        else:
+            return make_response({'error': 'User not found'}, 404)
+    
 class Destinations(Resource):
     
     def get(self):
@@ -72,10 +72,24 @@ class Destinations(Resource):
     
     def post(self):
         data = request.json
-        destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=data['image'])
-        db.session.add(destination)
-        db.session.commit()
-        return make_response(destination.to_dict(), 201)
+        try:
+            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=data['image'])
+            db.session.add(destination)
+            db.session.commit()
+            return make_response(destination.to_dict(), 201)
+        except ValueError as e:
+            return make_response({'error': str(e)}, 400)
+    
+    
+class DestinationByID(Resource):
+    
+    def get(self,id):
+        destination = Destination.query.filter_by(id=id).first()
+        
+        if destination:
+            return make_response(destination.to_dict(), 200)
+        
+        return make_response({'error': 'Destination not found'}, 404)
     
     def delete(self, id):
         destination = Destination.query.filter_by(id= id).first()
@@ -88,25 +102,20 @@ class Destinations(Resource):
         
     def patch(self, id):
         destination = Destination.query.filter_by(id=id).first()
-        for attr in request.json:
-            setattr(destination, attr, request.json[attr])
-            
-        db.session.add(destination)
-        db.session.commit()
-        return make_response(destination.to_dict(), 200)
-    
-class DestinationByID(Resource):
-    
-    def get(self,id):
-        destination = Destination.query.filter_by(id=id).first()
-        
         if destination:
+            for attr in request.json:
+                setattr(destination, attr, request.json[attr])
+        
+            db.session.add(destination)
+            db.session.commit()
             return make_response(destination.to_dict(), 200)
         
-        return make_response({'error': 'Destination not found'}, 404)
+        else:
+            return make_response({'error': 'Destination not found'}, 404)
+      
     
     
-@app.route('/uploads/<filename>')
+@app.route('/static/uploads/<filename>')
 def uploads(filename):
     return send_from_directory('uploads', filename)
     
@@ -117,11 +126,29 @@ class Reviews(Resource):
         return make_response(reviews, 200)
     
     def post(self):
-        data = request.json
-        review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
-        db.session.add(review)
-        db.session.commit()
-        return make_response(review.to_dict(), 201)
+        loggedin = session.get('user_id')
+        if loggedin:
+            data = request.json
+            try:
+                review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
+                db.session.add(review)
+                db.session.commit()
+                return make_response(review.to_dict(), 201)
+            except ValueError as e:
+                return make_response({'error': str(e)}, 400)
+        else:
+            return make_response({'error': 'You need to be logged in to post a review'}, 401)
+
+    
+class ReviewByID(Resource):
+    
+    def get(self, id):
+        review = Review.query.filter_by(id=id).first()
+        
+        if review:
+            return make_response(review.to_dict(), 200)
+        
+        return make_response({'error': 'Review not found'}, 404)
     
     def delete(self, id):
         review = Review.query.filter_by(id= id).first()
@@ -141,24 +168,15 @@ class Reviews(Resource):
         db.session.commit()
         return make_response(review.to_dict(), 200)
     
-class ReviewByID(Resource):
-    
-    def get(self, id):
-        review = Review.query.filter_by(id=id).first()
-        
-        if review:
-            return make_response(review.to_dict(), 200)
-        
-        return make_response({'error': 'Review not found'}, 404)
-    
     
 class Login(Resource):
     
     def post(self):
         username = request.json.get('username')
         user = User.query.filter_by(username=username).first()
+        password = request.json.get('password')
         if user:
-            if user.authenticate(request.json.get('password')):
+            if user.authenticate(password):
                 session['user_id'] = user.id
                 return user.to_dict(), 200
             else:

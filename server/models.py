@@ -42,7 +42,6 @@ class User(db.Model, SerializerMixin):
 		password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
 		self._password = password_hash.decode('utf-8')
   
-	@staticmethod
 	def authenticate(self, password):
 		return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
    
@@ -90,7 +89,17 @@ class Destination(db.Model, SerializerMixin):
 					'name': self.name,
 					'description': self.description,
 					'location': self.location,
-					'image_url': url_for('uploads', filename=self.image, _external=True)
+					'image_url': url_for('static', filename=self.image, _external=True), 
+					'reviews': [ {'id': review.id,
+                  			'user_id': review.user_id,
+                     		'destination_id': review.destination_id,
+                       	'rating': review.rating,
+                        'comment': review.comment,
+                        'user': {
+                          'id': review.user.id,
+                          'username': review.user.username,
+                          'email': review.user.email
+                          }} for review in self.reviews]
 			}
  
 class Review(db.Model, SerializerMixin):
@@ -113,8 +122,22 @@ class Review(db.Model, SerializerMixin):
       raise ValueError('Comment must be at least 5 characters long')
     return comment
   
-  @validates(rating)
+  @validates('rating')
   def validate_rating(self, key, rating):
-    if 5 < rating < 0:
+    if not (5 >= int(rating) >= 0):
       raise ValueError('Rating must be between 1 and 5')
     return rating
+  
+  @validates('user_id')
+  def validate_user_id(self, key, user_id):
+    user = User.query.get(user_id)
+    if not user:
+      raise ValueError('User does not exist')
+    return user_id
+  
+  @validates('destination_id')
+  def validate_destination_id(self, key, destination_id):
+    destination = Destination.query.get(destination_id)
+    if not destination:
+      raise ValueError('Destination does not exist')
+    return destination_id

@@ -21,6 +21,7 @@ def make_users():
     username = [fake.unique.first_name() for _ in range(20)]
     email = [fake.email() for _ in range(20)]
     password = [fake.password(length=8) for _ in range(20)]
+    print(username[0], email[0], password[0])
     
     for i in range(20):
         user = User(username=username[i], email=email[i], password=password[i])
