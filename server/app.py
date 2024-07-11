@@ -50,7 +50,7 @@ class UserByID(Resource):
         if user:
             db.session.delete(user)
             db.session.commit()
-            return make_response(user.to_dict(), 200)
+            return make_response({}, 204)
         else:
             return make_response({'error': 'User not found'}, 404)
         
@@ -99,7 +99,7 @@ class DestinationByID(Resource):
         if destination:
             db.session.delete(destination)
             db.session.commit()
-            return make_response(destination.to_dict(), 200)
+            return make_response({}, 204)
         else:
             return make_response({'error': 'Destination not found'}, 404)
         
@@ -157,7 +157,7 @@ class ReviewByID(Resource):
         if review:
             db.session.delete(review)
             db.session.commit()
-            return make_response(review.to_dict(), 200)
+            return make_response({}, 204)
         else:
             return make_response({'error': 'Review not found'}, 404)
         
