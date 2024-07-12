@@ -1,20 +1,21 @@
 // Login.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import api from '../../services/api';
-const api = "http://127.0.0.1:5555"
+const api = "http://127.0.0.1:5555";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post('/login', { username, password });
+      const response = await api.post("/login", { username, password });
       // Handle successful login (e.g., store token in local storage)
-      console.log('Login successful:', response.data);
+      //fix fetch
+      console.log("Login successful:", response.data);
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error("Error logging in:", error);
     }
   };
 

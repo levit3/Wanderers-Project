@@ -8,6 +8,7 @@ const api = "http://127.0.0.1:5555";
 const TravelGuideDetail = () => {
   const { id } = useParams();
   const [guide, setGuide] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetchGuide();
@@ -18,6 +19,7 @@ const TravelGuideDetail = () => {
       const response = await fetch(`http://127.0.0.1:5555/destinations/${id}`);
       const data = await response.json();
       setGuide(data);
+      setReviews(data.reviews);
     } catch (error) {
       console.error("Error fetching guide:", error);
     }
@@ -31,15 +33,15 @@ const TravelGuideDetail = () => {
     <div>
       <h2>{guide.name}</h2>
       <p>{guide.description}</p>
-      {guide.reviews.map((g) => {
+      {reviews.map((g) => {
         return (
           <div key={g.id}>
-            <p>Rating: {g.rating}</p>
             <p>Comment: {g.comment}</p>
+            <p>Rating: {g.rating}</p>
           </div>
         );
       })}
-      <ReviewForm />
+      <ReviewForm setReviews={setReviews} reviews={reviews} guide={guide} />
     </div>
   );
 };

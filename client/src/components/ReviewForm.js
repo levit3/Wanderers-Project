@@ -1,19 +1,28 @@
-// ReviewForm.js
-import React, { useState } from 'react';
-import api from '../services/api';
+import React, { useState } from "react";
 
-const ReviewForm = ({ guideId }) => {
-  const [rating, setRating] = useState('');
-  const [comment, setComment] = useState('');
+const ReviewForm = ({ setReviews, reviews, guide }) => {
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await api.post(`/guides/${guideId}/reviews`, { rating, comment });
-      // Optionally: Refresh guide details after submitting review
-      // Or navigate to a different page
+      const response = await fetch("http://127.0.0.1:5555/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rating: rating,
+          comment: comment,
+          destination_id: guide.id,
+          //user id goes here
+        }),
+      });
+      const data = await response.json();
+      setReviews([...reviews, data]);
     } catch (error) {
-      console.error('Error submitting review:', error);
+      console.error("Error posting review:", error);
     }
   };
 

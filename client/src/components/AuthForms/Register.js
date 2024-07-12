@@ -1,21 +1,26 @@
 // Register.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import api from '../../services/api';
-const api = "http://127.0.0.1:5555"
+const api = "http://127.0.0.1:5555";
 
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post('/register', { username, email, password });
+      const response = await api.post("/register", {
+        username,
+        email,
+        password,
+      });
       // Handle successful registration (e.g., navigate to login page)
-      console.log('Registration successful:', response.data);
+      //fix fetch
+      console.log("Registration successful:", response.data);
     } catch (error) {
-      console.error('Error registering:', error);
+      console.error("Error registering:", error);
     }
   };
 
