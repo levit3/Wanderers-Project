@@ -1,8 +1,9 @@
 // TravelGuideDetail.js
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ReviewForm from "./ReviewForm";
 // import api from '../services/api';
-const api = "http://127.0.0.1:5555"
+const api = "http://127.0.0.1:5555";
 
 const TravelGuideDetail = () => {
   const { id } = useParams();
@@ -14,10 +15,11 @@ const TravelGuideDetail = () => {
 
   const fetchGuide = async () => {
     try {
-      const response = await api.get(`/guides/${id}`);
-      setGuide(response.data);
+      const response = await fetch(`http://127.0.0.1:5555/destinations/${id}`);
+      const data = await response.json();
+      setGuide(data);
     } catch (error) {
-      console.error('Error fetching guide:', error);
+      console.error("Error fetching guide:", error);
     }
   };
 
@@ -27,9 +29,17 @@ const TravelGuideDetail = () => {
 
   return (
     <div>
-      <h2>{guide.title}</h2>
+      <h2>{guide.name}</h2>
       <p>{guide.description}</p>
-      {/* Add more details as needed */}
+      {guide.reviews.map((g) => {
+        return (
+          <div key={g.id}>
+            <p>Rating: {g.rating}</p>
+            <p>Comment: {g.comment}</p>
+          </div>
+        );
+      })}
+      <ReviewForm />
     </div>
   );
 };
