@@ -18,7 +18,6 @@ app.secret_key = b'/O\xf5\xa8\xf1\xc5\x97\xdcM\xcc\xd0\xf0\xf4\r\xc7f'
 @app.route('/')
 def index():
     return '<h1>Wanderers</h1>'
-
 class Users(Resource):
     
     def get(self):
@@ -118,6 +117,7 @@ class DestinationByID(Resource):
         else:
             return make_response({'error': 'Destination not found'}, 404)
       
+### Route for images ###
 @app.route('/static/uploads/<filename>')
 def uploads(filename):
     return send_from_directory('uploads', filename)
