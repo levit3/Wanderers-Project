@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+// // src/App.js
+// import React from 'react';
+// import { BrowserRouter as Routes, Route, } from 'react-router-dom';
+// import Home from './pages/Home';
+// import Login from './AuthForms/Login';
+// import Register from './AuthForms/Register';
+// import TravelGuideDetail from './TravelGuideDetail';
+// import TravelGuideList from './TravelGuideList';
 
-function App() {
-  return <h1>Project Client</h1>;
-}
+// // const router = createBrowserRouter([
+// //   {path: "/", element: <Home /> },
+// //   { path: "/login", element: <Login /> },
+// //   { path: "/signup", element:<Register /> },
+// //   { path: "/travelguides", element: <TravelGuideList /> },
+// //   { path: "/travelguides/:id", element: <TravelGuideDetail /> }
 
-export default App;
+// // ])
+
+
