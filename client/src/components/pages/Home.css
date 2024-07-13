@@ -1,0 +1,108 @@
+.landing-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.header {
+  background-color: #009688;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin-top: 10px;
+}
+
+.header .login-btnn {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.header .login-btnn:hover {
+  background-color: #e64a19;
+}
+
+.featured-destination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.destination-card,
+.box-card {
+  background-color: white;
+  width: 300px;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.destination-card img,
+.box-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.destination-card h3,
+.box-card h3 {
+  margin: 15px 0 10px;
+  font-size: 1.5em;
+}
+
+.destination-card p,
+.box-card p {
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: #666;
+}
+
+.rating {
+  margin: 10px 0;
+}
+
+.star {
+  color: #ccc;
+  font-size: 20px;
+}
+
+.star.filled {
+  color: #ff5722;
+}
+
+.read-more {
+  color: #009688;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+.contact {
+  background-color: #009688;
+  color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.contact h2 {
+  margin-top: 0;
+}
+
+.contact p {
+  margin: 5px 0;
+}

@@ -7,13 +7,11 @@
 // import TravelGuideDetail from './TravelGuideDetail';
 // import TravelGuideList from './TravelGuideList';
 
-// // const router = createBrowserRouter([
-// //   {path: "/", element: <Home /> },
-// //   { path: "/login", element: <Login /> },
-// //   { path: "/signup", element:<Register /> },
-// //   { path: "/travelguides", element: <TravelGuideList /> },
-// //   { path: "/travelguides/:id", element: <TravelGuideDetail /> }
+// const router = createBrowserRouter([
+//   {path: "/", element: <Home /> },
+//   { path: "/login", element: <Login /> },
+//   { path: "/signup", element:<Register /> },
+//   { path: "/travelguides", element: <TravelGuideList /> },
+//   { path: "/travelguides/:id", element: <TravelGuideDetail /> }
 
-// // ])
-
-
+// ])

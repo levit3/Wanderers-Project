@@ -1,9 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import './Home.css'
+import ReadMore from "./ReadMore";
+import "./Home.css";
 
-//Complete home page
 const Home = () => {
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i} className={i <= rating ? "star filled" : "star"}>
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className="landing-page">
       <header className="header">
@@ -11,19 +23,19 @@ const Home = () => {
         <Link to={"/login"}>
           <button className="login-btnn">Login/Signup</button>
         </Link>
-        <h1>Featured travels</h1>
       </header>
       <section className="featured-destination">
-        <div className="book-card">
+        <div className="box-card">
           <img
             src="https://www.tripsavvy.com/thmb/qoEzJSOSZsriZLdLeFOWpDI09-A=/2119x1415/filters:fill(auto,1)/GettyImages-5012969201-f35ade933e6c4114829401bf607160ea.jpg"
             alt="Seychelles island img"
           />
-          <h3>Seychelles Island, Seychelles</h3>
-          <p>
+          <h3>Seychelles Beaches, Seychelles</h3>
+          <div className="rating">{renderStars(4.5)}</div>
+          <ReadMore>
             Located approximately 930 miles off the eastern coast of Africa in
             the heart of the Indian Ocean, the Seychelles are a slice of heaven
-            right here on Earth.They are beautiful year-round but the best time
+            right here on Earth. They are beautiful year-round but the best time
             to visit is in spring or fall when the islands are less crowded and
             the weather is nearly perfect. The archipelago is made up of 115
             tiny islands that are well known for their soft, white-sand beaches,
@@ -31,15 +43,17 @@ const Home = () => {
             destination for travelers looking to escape the hustle and bustle of
             daily life for a while, providing a serene refuge to be as active or
             relaxed as they choose.
-          </p>
+          </ReadMore>
         </div>
+
         <div className="destination-card">
           <img
             src="https://cdn.audleytravel.com/4082/2913/79/8003731-nairobi.jpg"
             alt="Nairobi city img"
           />
           <h3>Nairobi, Kenya</h3>
-          <p>
+          <div className="rating">{renderStars(5)}</div>
+          <ReadMore>
             Nairobi, the capital city of Kenya, is a vibrant metropolis that
             combines modernity with rich history and natural beauty. It serves
             as the main gateway to the rest of Kenya and is a bustling hub for
@@ -47,7 +61,7 @@ const Home = () => {
             population, with residents from various ethnic backgrounds, making
             it a melting pot of cultures. This diversity is reflected in the
             city’s food, art, music, and festivals.
-          </p>
+          </ReadMore>
         </div>
 
         <div className="destination-card">
@@ -56,7 +70,8 @@ const Home = () => {
             alt="Table Mountain img"
           />
           <h3>Table Mountain, South Africa</h3>
-          <p>
+          <div className="rating">{renderStars(4)}</div>
+          <ReadMore>
             Table Mountain, a prominent flat-topped mountain overlooking the
             city of Cape Town in South Africa, is one of the most iconic
             landmarks in the country. It stands at approximately 1,085 meters
@@ -64,12 +79,12 @@ const Home = () => {
             Known for its stunning panoramic views, diverse flora and fauna, and
             unique geological features, Table Mountain is a must-visit
             destination for nature lovers and adventure seekers.
-          </p>
+          </ReadMore>
         </div>
       </section>
       <footer className="contact">
         <h2>Contact Us</h2>
-        <p>Email: wanderersinfo@gmail.com</p>
+        <p>Email: wanderers.info@gmail.com</p>
         <p>Phone: +25411456789</p>
       </footer>
     </div>
