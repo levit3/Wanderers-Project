@@ -13,36 +13,64 @@ const Home = () => {
         </Link>
         <h1>Featured travels</h1>
       </header>
-      <section className="featured-books">
+      <section className="featured-destination">
         <div className="book-card">
           <img
-            src="https://upload.wikimedia.org/wikipedia/en/a/a1/Lord_Rings_Two_Towers.jpg"
-            alt="Book Cover"
+            src="https://www.tripsavvy.com/thmb/qoEzJSOSZsriZLdLeFOWpDI09-A=/2119x1415/filters:fill(auto,1)/GettyImages-5012969201-f35ade933e6c4114829401bf607160ea.jpg"
+            alt="Seychelles island img"
           />
-          <h3>The Lord of the Rings</h3>
-          <p>J.R.R. Tolkien</p>
+          <h3>Seychelles Island, Seychelles</h3>
+          <p>
+            Located approximately 930 miles off the eastern coast of Africa in
+            the heart of the Indian Ocean, the Seychelles are a slice of heaven
+            right here on Earth.They are beautiful year-round but the best time
+            to visit is in spring or fall when the islands are less crowded and
+            the weather is nearly perfect. The archipelago is made up of 115
+            tiny islands that are well known for their soft, white-sand beaches,
+            crystal clear waters, and unique wildlife. It is a wonderful
+            destination for travelers looking to escape the hustle and bustle of
+            daily life for a while, providing a serene refuge to be as active or
+            relaxed as they choose.
+          </p>
         </div>
-        <div className="book-card">
+        <div className="destination-card">
           <img
-            src="https://books.google.co.ke/books/content?id=fUoQFk8aTCkC&pg=PP1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U1QZuk83HucHFgY1TEjC_DKdW7BcQ&w=1280"
-            alt="Book Cover"
+            src="https://cdn.audleytravel.com/4082/2913/79/8003731-nairobi.jpg"
+            alt="Nairobi city img"
           />
-          <h3>The Grapes of Wrath</h3>
-          <p>John Steinbeck</p>
+          <h3>Nairobi, Kenya</h3>
+          <p>
+            Nairobi, the capital city of Kenya, is a vibrant metropolis that
+            combines modernity with rich history and natural beauty. It serves
+            as the main gateway to the rest of Kenya and is a bustling hub for
+            business, culture, and wildlife. It is known for its diverse
+            population, with residents from various ethnic backgrounds, making
+            it a melting pot of cultures. This diversity is reflected in the
+            city’s food, art, music, and festivals.
+          </p>
         </div>
-        <div className="book-card">
+
+        <div className="destination-card">
           <img
-            src="https://books.google.co.ke/books/content?id=htkrUmjuNjoC&pg=PP1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U3Y3sJQ4uVmocOXQ0EQxsd3eUyxpg&w=1280"
-            alt="Book Cover"
+            src="https://i.pinimg.com/originals/92/b3/d6/92b3d6c3767bc22b6387b514415b2f9b.jpg"
+            alt="Table Mountain img"
           />
-          <h3>The Inferno</h3>
-          <p>Dante Alighieri</p>
+          <h3>Table Mountain, South Africa</h3>
+          <p>
+            Table Mountain, a prominent flat-topped mountain overlooking the
+            city of Cape Town in South Africa, is one of the most iconic
+            landmarks in the country. It stands at approximately 1,085 meters
+            (3,558 feet) above sea level and is a UNESCO World Heritage Site.
+            Known for its stunning panoramic views, diverse flora and fauna, and
+            unique geological features, Table Mountain is a must-visit
+            destination for nature lovers and adventure seekers.
+          </p>
         </div>
       </section>
       <footer className="contact">
         <h2>Contact Us</h2>
-        <p>Email: deezbuuks@gmail.com</p>
-        <p>Phone: +1234567899</p>
+        <p>Email: wanderersinfo@gmail.com</p>
+        <p>Phone: +25411456789</p>
       </footer>
     </div>
   );
