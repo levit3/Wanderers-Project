@@ -1,7 +1,7 @@
 // Register.js
 import React, { useState } from "react";
 import "./Auth.css";
-// import api from '../../services/api';
+import Login from "./Login";
 const api = "http://127.0.0.1:5555";
 
 const Register = () => {
@@ -9,20 +9,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await api.post("/register", {
-  //       username,
-  //       email,
-  //       password,
-  //     });
-  //     // Handle successful registration (e.g., navigate to login page)
-  //     console.log("Registration successful:", response.data);
-  //   } catch (error) {
-  //     console.error("Error registering:", error);
-  //   }
-  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -38,16 +24,15 @@ const Register = () => {
       }
       const userData = await response.json();
       console.log("Registration successful:", userData);
-      // Handle successful registration (e.g., redirect to login page)
+      <Login />;
     } catch (error) {
       console.error("Error registering:", error);
-      // Handle error (e.g., display error message to user)
     }
   };
 
   return (
     <div className="form-container-signup" onSubmit={handleSubmit}>
-      <p className="title">Join Us</p>
+      <p className="title">Sign up</p>
       <form className="form">
         <input
           type="email"
