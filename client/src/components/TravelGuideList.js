@@ -1,6 +1,8 @@
 // TravelGuideList.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
+import "./List.css";
 // import api from '../services/api';
 
 const api = "http://127.0.0.1:5555";
@@ -23,21 +25,31 @@ const TravelGuideList = () => {
   };
 
   return (
-    <div className="guide-list">
+    <div className="guide-list py-3">
+      <NavBar />
       <h3>Travel Guides</h3>
       <div className="card-container">
-        {guides.map((guide) => (
-          <div key={guide.id} className="card">
-            <h4>{guide.name}</h4>
-            <img
-              src={`http://127.0.0.1:5555/static/uploads/Untitled design (${
-                guide.id - 1
-              }).png`}
-              alt="image"
-            />
-            <Link to={`/travelguides/${guide.id}`}>View Details</Link>
-          </div>
-        ))}
+        <main id="main">
+          {guides.map((guide) => (
+            <div key={guide.id} className="destination-card">
+              <img
+                src={`http://127.0.0.1:5555/static/uploads/Untitled design (${
+                  guide.id - 1
+                }).png`}
+                alt="image"
+              />
+              <h2>{guide.name}</h2>
+              <p>{guide.description}</p>
+              <Link to={`/travelguides/${guide.id}`}>
+                {" "}
+                Find out more
+                <span className="material-symbols-outlined">
+                  arrow_right_alt
+                </span>
+              </Link>
+            </div>
+          ))}
+        </main>
       </div>
     </div>
   );
