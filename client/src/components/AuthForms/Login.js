@@ -1,59 +1,76 @@
 // Login.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "./Auth.css";
-// import api from '../../services/api';
-const api = "http://127.0.0.1:5555";
+import { useNavigate } from "react-router-dom";
+// import backImage from "../../images/26986927_v882-kul-35.jpg";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post("/login", { username, password });
-      // Handle successful login (e.g., store token in local storage)
-      console.log("Login successful:", response.data);
+      const response = await fetch("http://127.0.0.1:5555/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      if (!response.ok) {
+        throw new Error("Registration failed");
+      }
+      const userData = await response.json();
+      console.log("Registration successful:", userData);
+      navigate("/travelguides");
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error registering:", error);
+      setErrorMessage("Invalid username or password");
     }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn">
-          Login
-        </button>
-
-        <div className="register-link">
-          <p>Don't have an account yet?</p>
-          <Link to="/register" className="register-btn">
-            Register here
-          </Link>
-        </div>
+    <div className="form-container-login" onSubmit={handleSubmit}>
+      <p className="title">Welcome back</p>
+      <form className="form">
+        <input
+          type="text"
+          className="input"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+            setErrorMessage("");
+          }}
+          required
+        />
+        <input
+          type="password"
+          className="input"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setErrorMessage("");
+          }}
+          required
+        />
+        {errorMessage && (
+          <p style={{ color: "red", margin: "2px", fontSize: "14px" }}>
+            {errorMessage}
+          </p>
+        )}
+        <button className="form-btn">Log in</button>
       </form>
+      <p className="sign-up-label">
+        Don't have an account?
+        <a className="sign-up-link" href="/signup">
+          Sign up
+        </a>
+      </p>
     </div>
   );
 };
