@@ -47,7 +47,7 @@ const Register = () => {
 
   return (
     <div className="form-container-signup" onSubmit={handleSubmit}>
-      <p className="title">Welcome back</p>
+      <p className="title">Join Us</p>
       <form className="form">
         <input
           type="email"
