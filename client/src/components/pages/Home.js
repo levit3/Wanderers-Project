@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NavBar from "../NavBar";
 // import './Home.css'
 
 //Complete home page
 const Home = () => {
   return (
     <div className="landing-page">
+      <NavBar />
       <header className="header">
         <h3>Welcome to our Travel Review Website. </h3>
         <Link to={"/login"}>
