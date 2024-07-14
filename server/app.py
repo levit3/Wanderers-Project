@@ -23,16 +23,6 @@ class Users(Resource):
     def get(self):
         users = [user.to_dict() for user in User.query.all()]
         return make_response(users, 200)
-    
-    def post(self):
-        data = request.get_json()
-        try:
-            user = User(username=data['username'], email=data['email'], password=data['password'])
-            db.session.add(user)
-            db.session.commit()
-            return make_response(user.to_dict(), 201)
-        except ValueError as e:
-            return make_response({'error': str(e)}, 400)
 
 class UserByID(Resource):   
     
@@ -193,6 +183,19 @@ class Logout(Resource):
     def delete(self):
         session['user_id'] = None
         return {'message': 'Logged out successfully'}, 204
+    
+    
+class Register(Resource):
+    
+        def post(self):
+            data = request.get_json()
+            try:
+                user = User(username=data['username'], email=data['email'], password=data['password'])
+                db.session.add(user)
+                db.session.commit()
+                return make_response(user.to_dict(), 201)
+            except ValueError as e:
+                return make_response({'error': str(e)}, 400)
         
 class CheckSession(Resource):
     
@@ -213,9 +216,8 @@ api.add_resource(ReviewByID, '/reviews/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check-session')
+api.add_resource(Register, '/register')
     
-
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
