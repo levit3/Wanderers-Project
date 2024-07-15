@@ -5,8 +5,8 @@ function NavBar() {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg sticky-top"
-        style={{ backgroundColor: "#141414" }}
+        className="navbar navbar-expand-lg sticky-top navbar-dark"
+        style={{ backgroundColor: "#252932" }}
       >
         <div className="container">
           <a className="navbar-brand px-4 text-white" href="/">
