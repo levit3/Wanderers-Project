@@ -6,7 +6,7 @@ function NavBar() {
     <>
       <nav
         className="navbar navbar-expand-lg sticky-top"
-        style={{ backgroundColor: "#252932" }}
+        style={{ backgroundColor: "#141414" }}
       >
         <div className="container">
           <a className="navbar-brand px-4 text-white" href="/">
