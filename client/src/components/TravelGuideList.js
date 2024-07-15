@@ -27,7 +27,6 @@ const TravelGuideList = () => {
   return (
     <div className="guide-list py-3">
       <NavBar />
-      <h3>Travel Guides</h3>
       <div className="card-container">
         <main id="main">
           {guides.map((guide) => (
