@@ -15,6 +15,7 @@
   padding: 50px;
   gap: 20px;
   font-family: "Roboto", sans-serif;
+  background-color: #eff1f5;
 }
 
 .card-container #main .destination-card {
@@ -26,7 +27,7 @@
   position: relative;
   color: white;
   box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
-  margin: 10px;
+  margin: 5px;
 }
 
 .card-container #main .destination-card img {
@@ -76,21 +77,21 @@
   gap: 5px;
 }
 
-.card-container #main .destination-card:hover h2 {
-  inset: auto auto 200px 20px;
-  transition: inset 0.5s ease-out;
-  margin: 0;
-}
-
 .card-container #main .destination-card:hover p,
 .card-container #main .destination-card:hover a {
   opacity: 1;
   transition: opacity 0.5s 0.1s ease-in;
 }
 
+.card-container #main .destination-card:hover h2 {
+  inset: auto auto 200px 20px;
+  transition: inset 0.5s ease-out;
+  margin: 0;
+}
+
 .card-container #main .destination-card:hover img {
   transform: scale(1.5);
-  filter: brightness(50%);
+  filter: brightness(60%);
 }
 
 .material-symbols-outlined {
