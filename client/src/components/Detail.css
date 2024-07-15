@@ -1,0 +1,112 @@
+/* Detail.css */
+@import url("https://api.fontshare.com/v2/css?f[]=chillax@500&f[]=satoshi@400&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=panchang@400&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=pencerio@50&display=swap");
+
+.Header {
+  font-family: "Panchang", sans-serif;
+  font-size: 6vw;
+  font-weight: 600;
+  width: 60%;
+  position: absolute;
+  top: 25vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.Location {
+  font-family: "Pencerio", cursive;
+  font-size: 1.5vw;
+  font-weight: 600;
+  position: absolute;
+  top: 68vh;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.image {
+  width: 100%;
+  transition: opacity 1.5s ease;
+  max-height: 100vh;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.container-fluid {
+  height: 100vh;
+  position: relative;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  z-index: 3;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+.description {
+  padding: 20px;
+  background: #f5f5f5;
+  margin-top: 10px;
+  min-height: 100vh;
+}
+
+.review-container {
+  padding: 20px;
+  margin-top: 20px;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .Header {
+    font-size: 10vw;
+    top: 35vw;
+  }
+
+  .scroll-arrow {
+    display: hidden;
+  }
+
+  .Location {
+    font-family: "Boska";
+    font-size: 2.5vw;
+    font-weight: 570;
+    position: absolute;
+    top: 50vw;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+  }
+}
