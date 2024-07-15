@@ -62,7 +62,7 @@ const TravelGuideDetail = () => {
         <h3 className="Header">{guide.name}</h3>
         <h5 className="Location">{guide.location}</h5>
         <img
-          className="img-fluid rounded image"
+          className="img-fluid rounded-bottom image"
           src={guide.link}
           alt="image"
           width="100%"

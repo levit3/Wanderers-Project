@@ -81,11 +81,11 @@
   min-height: 100vh;
 }
 
-.review-container {
+/* .review-container {
   padding: 20px;
   margin-top: 20px;
   min-height: 100vh;
-}
+} */
 
 @media (max-width: 768px) {
   .Header {
