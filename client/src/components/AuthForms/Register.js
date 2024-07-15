@@ -30,6 +30,8 @@ const Register = () => {
     }
   };
 
+  /*** Handle Same username/email ***/
+
   return (
     <div className="form-container-signup" onSubmit={handleSubmit}>
       <p className="title">Sign up</p>
