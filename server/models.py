@@ -61,6 +61,7 @@ class Destination(db.Model, SerializerMixin):
 	location = db.Column(db.String, nullable=False)
 	description = db.Column(db.String, nullable=False)
 	image = db.Column(db.String, nullable=False)
+	link = db.Column(db.String)
 	
 	reviews = db.relationship('Review', back_populates = 'destination')
  
@@ -90,6 +91,7 @@ class Destination(db.Model, SerializerMixin):
 					'description': self.description,
 					'location': self.location,
 					'image_url': url_for('static', filename=self.image, _external=True), 
+					'link': self.link,
 					'reviews': [ {'id': review.id,
                   			'user_id': review.user_id,
                      		'destination_id': review.destination_id,
