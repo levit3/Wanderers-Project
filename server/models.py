@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func
 import re 
 from flask import url_for
 
@@ -97,6 +98,7 @@ class Destination(db.Model, SerializerMixin):
                      		'destination_id': review.destination_id,
                        	'rating': review.rating,
                         'comment': review.comment,
+                        'date': review.date,
                         'user': {
                           'id': review.user.id,
                           'username': review.user.username,
@@ -112,6 +114,7 @@ class Review(db.Model, SerializerMixin):
   destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
   rating = db.Column(db.Integer, nullable=False)
   comment = db.Column(db.String, nullable=False)
+  date = db.Column(db.Date, server_default = func.now())
   
   user = db.relationship('User', back_populates='reviews')
   destination = db.relationship('Destination', back_populates='reviews')

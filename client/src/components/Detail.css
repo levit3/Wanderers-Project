@@ -2,9 +2,11 @@
 @import url("https://api.fontshare.com/v2/css?f[]=chillax@500&f[]=satoshi@400&display=swap");
 @import url("https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap");
 @import url("https://api.fontshare.com/v2/css?f[]=panchang@400&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=bespoke-serif@500&display=swap");
 @import url("https://api.fontshare.com/v2/css?f[]=pencerio@50&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-.Header {
+.dest-header {
   font-family: "Panchang", sans-serif;
   font-size: 6vw;
   font-weight: 600;
@@ -18,7 +20,7 @@
   z-index: 2;
 }
 
-.Location {
+.dest-location {
   font-family: "Pencerio", cursive;
   font-size: 1.5vw;
   font-weight: 600;
@@ -39,11 +41,6 @@
 
 .hidden {
   opacity: 0;
-}
-
-.container-fluid {
-  height: 100vh;
-  position: relative;
 }
 
 .scroll-arrow {
@@ -74,13 +71,35 @@
   }
 }
 
-.description {
-  padding: 20px;
-  background: #f5f5f5;
-  margin-top: 10px;
+.dest-description {
+  /* padding: 10px;
+  margin-top: 0px; */
   min-height: 100vh;
 }
 
+.text-end p {
+  display: inline;
+}
+.average {
+  font-family: "Bespoke Serif", serif;
+  font-size: 7vh;
+}
+.avg {
+  font-family: Pencorio;
+  font-weight: 500;
+}
+.text-description {
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+}
+
+.review-card p {
+  display: inline-block;
+}
+
+.user-details {
+  display: inline-flex;
+}
 /* .review-container {
   padding: 20px;
   margin-top: 20px;
@@ -88,7 +107,7 @@
 } */
 
 @media (max-width: 768px) {
-  .Header {
+  .dest-header {
     font-size: 10vw;
     top: 35vw;
   }
@@ -97,7 +116,7 @@
     display: hidden;
   }
 
-  .Location {
+  .dest-location {
     font-family: "Boska";
     font-size: 2.5vw;
     font-weight: 570;
@@ -108,5 +127,9 @@
     color: white;
     text-align: center;
     z-index: 2;
+  }
+
+  .text-description {
+    font-size: 1rem !important;
   }
 }

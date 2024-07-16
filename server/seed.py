@@ -344,7 +344,7 @@ def make_reviews():
     
     for rev in range(len(ratings)):
         for i in range(len(reviews[rev])):
-            review = Review(user_id = randint(1, 20), destination_id = rev+1, rating = ratings[rev][i], comment = reviews[rev][i])
+            review = Review(user_id = randint(1, 20), destination_id = rev+1, rating = ratings[rev][i], comment = reviews[rev][i], date = fake.date_this_decade())
             review_list.append(review)
 
     db.session.add_all(review_list)
