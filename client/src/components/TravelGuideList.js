@@ -1,14 +1,17 @@
 // TravelGuideList.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "./List.css";
+import { userContext } from "./AuthForms/context/logincontext";
+
 // import api from '../services/api';
 
 const api = "http://127.0.0.1:5555";
 
 const TravelGuideList = () => {
   const [guides, setGuides] = useState([]);
+  const { user } = useContext(userContext);
 
   useEffect(() => {
     fetchGuides();
@@ -23,6 +26,7 @@ const TravelGuideList = () => {
       console.error("Error fetching guides:", error);
     }
   };
+  console.log(user);
 
   return (
     <div className="guide-list py-3">

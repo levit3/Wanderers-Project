@@ -1,13 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { userContext } from "../AuthForms/context/logincontext";
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const { user } = useContext(userContext);
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -19,35 +20,14 @@ const Home = () => {
     }
     return stars;
   };
-
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch("http://127.0.0.1:5555/check-session", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setIsLoggedIn(data.isLoggedIn);
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-      }
-    };
-
-    checkSession();
-  });
+  console.log(user);
 
   return (
     <div className="landing-page">
       <NavBar />
       <header className="header">
         <h3>Welcome to our Travel Review Website. </h3>
-        {!isLoggedIn && (
+        {!user && (
           <Link to={"/login"}>
             <button className="login-btnn">Login/Signup</button>
           </Link>

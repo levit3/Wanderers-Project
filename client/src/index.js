@@ -7,10 +7,10 @@ import TravelGuideDetail from "./components/TravelGuideDetail";
 import TravelGuideList from "./components/TravelGuideList";
 import "./index.css";
 import { createRoot } from "react-dom/client";
-// import { BrowserRouter } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
+import { UserProvider } from "./components/AuthForms/context/logincontext";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -23,4 +23,8 @@ const router = createBrowserRouter([
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-root.render(<RouterProvider router={router} />);
+root.render(
+  <UserProvider>
+    <RouterProvider router={router} />
+  </UserProvider>
+);

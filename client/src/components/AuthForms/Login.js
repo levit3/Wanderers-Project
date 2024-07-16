@@ -1,14 +1,15 @@
 // Login.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
-// import backImage from "../../images/26986927_v882-kul-35.jpg";
+import { userContext } from "./context/logincontext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const { user, setUser } = useContext(userContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,12 +26,14 @@ const Login = () => {
       }
       const userData = await response.json();
       console.log("Registration successful:", userData);
-      navigate("/travelguides");
+      setUser(userData);
+      setTimeout(() => navigate("/travelguides"), 2000);
     } catch (error) {
       console.error("Error registering:", error);
       setErrorMessage("Invalid username or password");
     }
   };
+  console.log(user);
 
   return (
     <div className="form-container-login" onSubmit={handleSubmit}>

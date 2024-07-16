@@ -119,18 +119,17 @@ class Reviews(Resource):
         return make_response(reviews, 200)
     
     def post(self):
-        loggedin = session.get('user_id')
-        if loggedin:
             data = request.json
-            try:
-                review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
-                db.session.add(review)
-                db.session.commit()
-                return make_response(review.to_dict(), 201)
-            except ValueError as e:
-                return make_response({'error': str(e)}, 400)
-        else:
-            return make_response({'error': 'You need to be logged in to post a review'}, 401)
+            if data['user_id']:
+                try:
+                    review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
+                    db.session.add(review)
+                    db.session.commit()
+                    return make_response(review.to_dict(), 201)
+                except ValueError as e:
+                    return make_response({'error': str(e)}, 400)
+            else:
+                return make_response({'error': 'You need to be logged in to post a review'}, 401)
 
 class ReviewByID(Resource):
     
@@ -174,7 +173,7 @@ class Login(Resource):
                 session['user_id'] = user.id
                 return user.to_dict(), 200
             else:
-                return {'error': 'Incorrect password'}, 401
+                return make_response({'error': 'Incorrect password'}, 401)
         else:
             return {'error': 'User not found'}, 404
         
@@ -202,7 +201,7 @@ class CheckSession(Resource):
     def post(self):
         user = User.query.filter_by(id= session.get('user_id')).first()
         if user:
-            return user.to_dict(), 200
+            return make_response(user.to_dict(), 200)
         else:
             return {'error': 'Session expired'}, 401
     

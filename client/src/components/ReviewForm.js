@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { userContext } from "./AuthForms/context/logincontext";
 
 const ReviewForm = ({ setReviews, reviews, guide }) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
+  const { user } = useContext(userContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,13 +19,19 @@ const ReviewForm = ({ setReviews, reviews, guide }) => {
           rating: rating,
           comment: comment,
           destination_id: guide.id,
-          //user id goes here
+          user_id: user.id,
         }),
       });
+      if (!response.ok) {
+        throw new Error("You need to be logged in to provide a review.");
+      }
       const data = await response.json();
       setReviews([...reviews, data]);
+      setRating("");
+      setComment("");
     } catch (error) {
       console.error("Error posting review:", error);
+      setErrorMessage("You need to be logged in to provide a review.");
     }
   };
 
@@ -50,6 +59,9 @@ const ReviewForm = ({ setReviews, reviews, guide }) => {
         </label>
       </div>
       <button type="submit">Submit Review</button>
+      {errorMessage && (
+        <p style={{ color: "red" }}>Please log in to provide a review.</p>
+      )}
     </form>
   );
 };
