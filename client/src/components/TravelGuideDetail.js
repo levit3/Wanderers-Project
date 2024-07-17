@@ -203,6 +203,11 @@ const TravelGuideDetail = () => {
           </div>
         </div>
       </div>
+      <footer className="contact">
+        <h2>Contact Us</h2>
+        <p>Email: wanderers.info@gmail.com</p>
+        <p>Phone: +25411456789</p>
+      </footer>
     </div>
   );
 };

@@ -1,0 +1,103 @@
+.about-container {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+  background-image: url("https://wallpapercave.com/wp/3wskH6G.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #d8dbdbb0;
+  background-blend-mode: lighten;
+}
+.back-button {
+  top: 5px;
+  color: #000000;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  transition: all 0.3s ease;
+  text-decoration: underline;
+}
+
+.about-container h1,
+.about-container h2,
+.about-container h3 {
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+  animation: bounceIn 1s;
+}
+
+.about-container p {
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+  font-weight: 700;
+  color: #000000;
+  animation: bounceIn 1.5s;
+}
+
+.about-container ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: start;
+}
+
+.about-container ul li {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  animation: bounceIn 2s;
+}
+
+.about-container ul li strong {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  animation: bounceIn 2.5s;
+}
+.contact {
+  background-color: #009688;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin: 0px;
+  border-radius: 10px 10px 0 0;
+}
+
+.contact h2 {
+  margin-top: 0;
+}
+
+.contact p {
+  margin: 5px 0;
+}
+.end {
+  border-radius: 10px;
+  text-align: center;
+  background-color: #baba9b;
+  animation: bounceIn 3s;
+}
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -56,6 +56,13 @@ function NavBar({ setLoggedIn, loggedIn }) {
                   Reviews
                 </Link>
               </li>
+<<<<<<< HEAD
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/about">
+                  About
+                </Link>
+              </li>
+=======
               {loggedIn && (
                 <li className="nav-item">
                   <button
@@ -66,6 +73,7 @@ function NavBar({ setLoggedIn, loggedIn }) {
                   </button>
                 </li>
               )}
+>>>>>>> 42f66edf768b9ffc35ac9841b4ef254d4800149f
             </ul>
           </div>
         </div>

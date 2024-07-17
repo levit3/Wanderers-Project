@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import App from "./components/App";
 import Home from "./components/pages/Home";
 import Login from "./components/AuthForms/Login";
+import About from "./components/About";
 import Register from "./components/AuthForms/Register";
 import TravelGuideDetail from "./components/TravelGuideDetail";
 import TravelGuideList from "./components/TravelGuideList";
@@ -16,6 +17,7 @@ import NavBar from "./components/NavBar";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/login", element: <Login /> },
+  { path: "/about", element: <About /> },
   { path: "/signup", element: <Register /> },
   { path: "/travelguides", element: <TravelGuideList /> },
   { path: "/travelguides/:id", element: <TravelGuideDetail /> },
