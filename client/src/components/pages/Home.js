@@ -7,7 +7,7 @@ import { userContext } from "../AuthForms/context/logincontext";
 
 const Home = () => {
   const [error, setError] = useState("");
-  const { user } = useContext(userContext);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const renderStars = (rating) => {
     const stars = [];
@@ -20,14 +20,33 @@ const Home = () => {
     }
     return stars;
   };
-  console.log(user);
+
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      try {
+        const response = await fetch("/check-session");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setLoggedIn(true);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchSessionData();
+  });
 
   return (
     <div className="landing-page">
       <NavBar />
       <header className="header">
         <h3>Welcome to our Travel Review Website. </h3>
-        {!user && (
+        {!loggedIn && (
           <Link to={"/login"}>
             <button className="login-btnn">Login/Signup</button>
           </Link>

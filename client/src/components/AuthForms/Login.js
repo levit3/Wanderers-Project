@@ -15,7 +15,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5555/login", {
+      const response = await fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,14 +27,12 @@ const Login = () => {
       }
       const userData = await response.json();
       console.log("Registration successful:", userData);
-      setUser(userData);
       navigate("/travelguides");
     } catch (error) {
       console.error("Error registering:", error);
       setErrorMessage("Invalid username or password");
     }
   };
-  console.log(user);
 
   return (
     <div>

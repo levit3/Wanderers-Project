@@ -1,11 +1,8 @@
 // Register.js
 import React, { useState } from "react";
 import "./Auth.css";
-import Login from "./Login";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
-const api = "http://127.0.0.1:5555";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -18,7 +15,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5555/register", {
+      const response = await fetch("/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

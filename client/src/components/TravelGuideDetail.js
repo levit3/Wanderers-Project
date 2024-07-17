@@ -23,9 +23,27 @@ const TravelGuideDetail = () => {
   const [guide, setGuide] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [average, setAverage] = useState(0);
-  const { user } = useContext(userContext);
+  const [user, setUser] = useState("");
   const [warning, setWarning] = useState("");
   const [editingReview, setEditingReview] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      try {
+        const response = await fetch("/check-session");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    };
+
+    fetchSessionData();
+  }, []);
 
   useEffect(() => {
     fetchGuide();
@@ -33,7 +51,7 @@ const TravelGuideDetail = () => {
 
   const fetchGuide = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5555/destinations/${id}`);
+      const response = await fetch(`/destinations/${id}`);
       const data = await response.json();
       setGuide(data);
       setReviews(data.reviews);
@@ -52,15 +70,12 @@ const TravelGuideDetail = () => {
 
   const handleDelete = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:5555/reviews/${reviewId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/reviews/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to delete review.");
       }
@@ -153,24 +168,23 @@ const TravelGuideDetail = () => {
                         <p className="card-text">{g.comment}</p>
                         <span>{renderStars(g.rating)}</span>
                       </div>
-
-                      {user.id === g.user.id && (
-                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                          <button
-                            className="btn btn-outline-info"
-                            onClick={() => handleEdit(g)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDelete(g.id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      )}
                     </div>
+                    {user.id === g.user.id && (
+                      <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button
+                          className="btn btn-outline-info"
+                          onClick={() => handleEdit(g)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(g.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -183,6 +197,7 @@ const TravelGuideDetail = () => {
               guide={guide}
               editingReview={editingReview}
               setEditingReview={setEditingReview}
+              user={user}
             />
           </div>
         </div>

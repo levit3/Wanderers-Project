@@ -7,13 +7,13 @@ const ReviewForm = ({
   guide,
   editingReview,
   setEditingReview,
+  user,
 }) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const [username, setUsername] = useState("");
-  const { user } = useContext(userContext);
   const [hasReviewed, setHasReviewed] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (editingReview) {
@@ -49,16 +49,13 @@ const ReviewForm = ({
     event.preventDefault();
     if (editingReview) {
       try {
-        const response = await fetch(
-          `http://127.0.0.1:5555/reviews/${editingReview.id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ comment, rating }),
-          }
-        );
+        const response = await fetch(`/reviews/${editingReview.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ comment, rating }),
+        });
         if (!response.ok) {
           throw new Error("Failed to update review.");
         }
@@ -71,30 +68,34 @@ const ReviewForm = ({
         console.error("Error updating review:", error);
       }
     } else {
-      try {
-        const response = await fetch("http://127.0.0.1:5555/reviews", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            rating: rating,
-            comment: comment,
-            destination_id: guide.id,
-            user_id: user.id,
-          }),
-        });
-        if (!response.ok) {
-          throw new Error("You need to be logged in to provide a review.");
+      if (username === user.username) {
+        try {
+          const response = await fetch("/reviews", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              rating: rating,
+              comment: comment,
+              destination_id: guide.id,
+              user_id: user.id,
+            }),
+          });
+          if (!response.ok) {
+            throw new Error("You need to be logged in to provide a review.");
+          }
+          const data = await response.json();
+          setReviews([...reviews, data]);
+          setRating("Rating");
+          setComment("");
+          setUsername("");
+        } catch (error) {
+          console.error("Error posting review:", error);
+          setErrorMessage("You need to be logged in to provide a review.");
         }
-        const data = await response.json();
-        setReviews([...reviews, data]);
-        setRating("Rating");
-        setComment("");
-        setUsername("");
-      } catch (error) {
-        console.error("Error posting review:", error);
-        setErrorMessage("You need to be logged in to provide a review.");
+      } else {
+        setErrorMessage("Unauthorized access.");
       }
     }
   };
@@ -117,7 +118,10 @@ const ReviewForm = ({
             id="usernameInput"
             placeholder="Username"
             defaultValue={user ? user.username : ""}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setErrorMessage("");
+            }}
           />
         </div>
         <div className="col input-group pt-3 mt-3" style={{ height: "2vh" }}>
@@ -168,6 +172,7 @@ const ReviewForm = ({
           You can only write a review once
         </small>
       )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 };

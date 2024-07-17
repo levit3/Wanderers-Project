@@ -5,10 +5,6 @@ import NavBar from "./NavBar";
 import "./List.css";
 import { userContext } from "./AuthForms/context/logincontext";
 
-// import api from '../services/api';
-
-const api = "http://127.0.0.1:5555";
-
 const TravelGuideList = () => {
   const [guides, setGuides] = useState([]);
   const { user } = useContext(userContext);
@@ -19,7 +15,7 @@ const TravelGuideList = () => {
 
   const fetchGuides = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5555/destinations");
+      const response = await fetch("/destinations");
       const data = await response.json();
       setGuides(data);
     } catch (error) {
@@ -29,9 +25,22 @@ const TravelGuideList = () => {
   console.log(user);
 
   return (
-    <div className="guide-list py-3">
+    <div className="guide-list">
       <NavBar />
+
       <div className="card-container">
+        <form className="d-flex" role="search">
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            style={{ width: "50ox" }}
+          />
+          <button className="btn btn-outline-success text-white" type="submit">
+            Search
+          </button>
+        </form>
         <main id="main">
           {guides.map((guide) => (
             <div key={guide.id} className="destination-card">

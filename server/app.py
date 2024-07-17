@@ -12,7 +12,6 @@ from config import app, db, api
 # Add your model imports
 from models import db, User, Destination, Review
 
-app.secret_key = b'/O\xf5\xa8\xf1\xc5\x97\xdcM\xcc\xd0\xf0\xf4\r\xc7f'
 
 
 @app.route('/')
@@ -120,10 +119,9 @@ class Reviews(Resource):
     
     def post(self):
             data = request.json
-            if data['user_id']:
-                print(type(data['destination_id']))
+            if session['user_id']:
                 try:
-                    review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
+                    review = Review(user_id=session['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
                     db.session.add(review)
                     db.session.commit()
                     return make_response(review.to_dict(), 201)
@@ -174,6 +172,7 @@ class Login(Resource):
         if user:
             if user.authenticate(password):
                 session['user_id'] = user.id
+                print(session['user_id'])
                 return user.to_dict(), 200
             else:
                 return make_response({'error': 'Incorrect password'}, 401)
@@ -201,8 +200,10 @@ class Register(Resource):
         
 class CheckSession(Resource):
     
-    def post(self):
-        user = User.query.filter_by(id= session.get('user_id')).first()
+    def get(self):
+        user_id = session.get('user_id')
+        print(user_id)
+        user = User.query.filter_by(id=user_id).first()
         if user:
             return make_response(user.to_dict(), 200)
         else:
