@@ -8,7 +8,6 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [loggedIn, setLoggedIn] = useState(false);
   const [messages, setMessages] = useState("");
   const navigate = useNavigate();
 

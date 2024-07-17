@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import App from "./components/App";
 import Home from "./components/pages/Home";
 import Login from "./components/AuthForms/Login";
@@ -12,8 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
-import { UserProvider } from "./components/AuthForms/context/logincontext";
+import NavBar from "./components/NavBar";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -27,8 +26,4 @@ const router = createBrowserRouter([
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-root.render(
-  <UserProvider>
-    <RouterProvider router={router} />
-  </UserProvider>
-);
+root.render(<RouterProvider router={router} />);

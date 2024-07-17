@@ -3,7 +3,6 @@ import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
 import { useEffect, useState, useContext } from "react";
-import { userContext } from "../AuthForms/context/logincontext";
 
 const Home = () => {
   const [error, setError] = useState("");
@@ -42,6 +41,7 @@ const Home = () => {
   });
 
   return (
+<<<<<<< HEAD
     <>
       <div className="landing-page">
         <NavBar />
@@ -74,6 +74,39 @@ const Home = () => {
               refuge to be as active or relaxed as they choose.
             </ReadMore>
           </div>
+=======
+    <div className="landing-page">
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <header className="header">
+        <h3>Welcome to our Travel Review Website. </h3>
+        {!loggedIn && (
+          <Link to={"/login"}>
+            <button className="login-btnn">Login/Signup</button>
+          </Link>
+        )}
+      </header>
+      <section className="featured-destination">
+        <div className="box-card">
+          <img
+            src="https://www.tripsavvy.com/thmb/qoEzJSOSZsriZLdLeFOWpDI09-A=/2119x1415/filters:fill(auto,1)/GettyImages-5012969201-f35ade933e6c4114829401bf607160ea.jpg"
+            alt="Seychelles island img"
+          />
+          <h3>Seychelles Beaches, Seychelles</h3>
+          <div className="rating">{renderStars(4.5)}</div>
+          <ReadMore>
+            Located approximately 930 miles off the eastern coast of Africa in
+            the heart of the Indian Ocean, the Seychelles are a slice of heaven
+            right here on Earth. They are beautiful year-round but the best time
+            to visit is in spring or fall when the islands are less crowded and
+            the weather is nearly perfect. The archipelago is made up of 115
+            tiny islands that are well known for their soft, white-sand beaches,
+            crystal clear waters, and unique wildlife. It is a wonderful
+            destination for travelers looking to escape the hustle and bustle of
+            daily life for a while, providing a serene refuge to be as active or
+            relaxed as they choose.
+          </ReadMore>
+        </div>
+>>>>>>> 42f66edf768b9ffc35ac9841b4ef254d4800149f
 
           <div className="destination-card">
             <img

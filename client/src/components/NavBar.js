@@ -1,8 +1,21 @@
 import React from "react";
 import backpackIcon from "../images/backpack2.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ setLoggedIn, loggedIn }) {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    const logout = async () => {
+      const response = await fetch("/logout", {
+        method: "DELETE",
+      });
+      setLoggedIn(false);
+      navigate("/");
+    };
+    logout();
+  }
+
   return (
     <>
       <nav
@@ -43,26 +56,25 @@ function NavBar() {
                   Reviews
                 </Link>
               </li>
+<<<<<<< HEAD
               <li className="nav-item">
                 <Link className="nav-link text-white" to="/about">
                   About
                 </Link>
               </li>
+=======
+              {loggedIn && (
+                <li className="nav-item">
+                  <button
+                    className="nav-link text-white"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
+>>>>>>> 42f66edf768b9ffc35ac9841b4ef254d4800149f
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-success text-white"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
           </div>
         </div>
       </nav>
