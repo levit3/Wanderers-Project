@@ -1,10 +1,9 @@
 // TravelGuideDetail.js
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ReviewForm from "./ReviewForm";
 import "./Detail.css";
 import NavBar from "./NavBar";
-import { userContext } from "./AuthForms/context/logincontext";
 
 const renderStars = (rating) => {
   const stars = [];
@@ -27,6 +26,7 @@ const TravelGuideDetail = () => {
   const [warning, setWarning] = useState("");
   const [editingReview, setEditingReview] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchSessionData = async () => {
@@ -37,6 +37,7 @@ const TravelGuideDetail = () => {
         }
         const data = await response.json();
         setUser(data);
+        setLoggedIn(true);
       } catch (error) {
         setErrorMessage(error.message);
       }
@@ -122,7 +123,7 @@ const TravelGuideDetail = () => {
   return (
     <div>
       <div className="container-fluid-md">
-        <NavBar />
+        <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <h3 className="dest-header">{guide.name}</h3>
         <h5 className="dest-location">{guide.location}</h5>
         <img

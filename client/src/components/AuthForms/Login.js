@@ -2,7 +2,6 @@
 import React, { useState, useContext } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
-import { userContext } from "./context/logincontext";
 import NavBar from "../NavBar";
 
 const Login = () => {
@@ -10,7 +9,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const { user, setUser } = useContext(userContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

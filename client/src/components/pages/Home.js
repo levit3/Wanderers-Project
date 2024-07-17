@@ -3,7 +3,6 @@ import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
 import { useEffect, useState, useContext } from "react";
-import { userContext } from "../AuthForms/context/logincontext";
 
 const Home = () => {
   const [error, setError] = useState("");
@@ -43,7 +42,7 @@ const Home = () => {
 
   return (
     <div className="landing-page">
-      <NavBar />
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <header className="header">
         <h3>Welcome to our Travel Review Website. </h3>
         {!loggedIn && (
