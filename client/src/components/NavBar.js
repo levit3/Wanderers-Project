@@ -43,6 +43,11 @@ function NavBar() {
                   Reviews
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/about">
+                  About
+                </Link>
+              </li>
             </ul>
             <form className="d-flex" role="search">
               <input
