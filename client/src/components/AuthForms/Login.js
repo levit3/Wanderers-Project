@@ -27,7 +27,7 @@ const Login = () => {
       const userData = await response.json();
       console.log("Registration successful:", userData);
       setUser(userData);
-      setTimeout(() => navigate("/travelguides"), 2000);
+      navigate("/travelguides");
     } catch (error) {
       console.error("Error registering:", error);
       setErrorMessage("Invalid username or password");

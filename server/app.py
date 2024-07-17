@@ -121,13 +121,16 @@ class Reviews(Resource):
     def post(self):
             data = request.json
             if data['user_id']:
+                print(type(data['destination_id']))
                 try:
                     review = Review(user_id=data['user_id'], destination_id=data['destination_id'], rating=data['rating'], comment=data['comment'])
                     db.session.add(review)
                     db.session.commit()
                     return make_response(review.to_dict(), 201)
                 except ValueError as e:
+                    print(e)
                     return make_response({'error': str(e)}, 400)
+
             else:
                 return make_response({'error': 'You need to be logged in to post a review'}, 401)
 

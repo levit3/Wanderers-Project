@@ -24,6 +24,8 @@ const TravelGuideDetail = () => {
   const [reviews, setReviews] = useState([]);
   const [average, setAverage] = useState(0);
   const { user } = useContext(userContext);
+  const [warning, setWarning] = useState("");
+  const [editingReview, setEditingReview] = useState(null);
 
   useEffect(() => {
     fetchGuide();
@@ -46,6 +48,30 @@ const TravelGuideDetail = () => {
     } catch (error) {
       console.error("Error fetching guide:", error);
     }
+  };
+
+  const handleDelete = async (reviewId) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5555/reviews/${reviewId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete review.");
+      }
+      setReviews(reviews.filter((review) => review.id !== reviewId));
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
+
+  const handleEdit = (review) => {
+    setEditingReview(review);
   };
 
   const handleScroll = () => {
@@ -118,20 +144,30 @@ const TravelGuideDetail = () => {
               return (
                 <div key={g.id} className="d-flex justify-content-evenly">
                   <div className="card my-4 w-4 " style={{ width: "50vw" }}>
-                    <h5 class="card-header d-flex justify-content-between">
+                    <h5 className="card-header d-flex justify-content-between">
                       <div>{g.user.username}</div>
                       <div className="fs-6">{formattedDate}</div>
                     </h5>
-                    <div class="card-body">
+                    <div className="card-body">
                       <div className="d-flex justify-content-between">
-                        <p class="card-text">{g.comment}</p>
+                        <p className="card-text">{g.comment}</p>
                         <span>{renderStars(g.rating)}</span>
                       </div>
 
                       {user.id === g.user.id && (
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                          <Link class="btn btn-outline-info">Edit</Link>
-                          <Link class="btn btn-danger">Delete</Link>
+                          <button
+                            className="btn btn-outline-info"
+                            onClick={() => handleEdit(g)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(g.id)}
+                          >
+                            Delete
+                          </button>
                         </div>
                       )}
                     </div>
@@ -140,11 +176,13 @@ const TravelGuideDetail = () => {
               );
             })}
           </div>
-          <div className="review-container">
+          <div className="review-container d-flex justify-content-center">
             <ReviewForm
               setReviews={setReviews}
               reviews={reviews}
               guide={guide}
+              editingReview={editingReview}
+              setEditingReview={setEditingReview}
             />
           </div>
         </div>

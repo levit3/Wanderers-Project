@@ -1,8 +1,8 @@
-"""Initial migration
+"""returns migrations
 
-Revision ID: 43934398139c
+Revision ID: 44bcac4888c5
 Revises: 
-Create Date: 2024-07-10 09:56:37.831975
+Create Date: 2024-07-17 11:21:00.098357
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '43934398139c'
+revision = '44bcac4888c5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,13 +24,14 @@ def upgrade():
     sa.Column('location', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('image', sa.String(), nullable=False),
+    sa.Column('link', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('_password', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -41,6 +42,7 @@ def upgrade():
     sa.Column('destination_id', sa.Integer(), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(), nullable=False),
+    sa.Column('date', sa.Date(), server_default=sa.text('(CURRENT_DATE)'), nullable=True),
     sa.ForeignKeyConstraint(['destination_id'], ['destinations.id'], name=op.f('fk_reviews_destination_id_destinations')),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_reviews_user_id_users')),
     sa.PrimaryKeyConstraint('id')

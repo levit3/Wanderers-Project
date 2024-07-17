@@ -1,37 +1,101 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { userContext } from "./AuthForms/context/logincontext";
 
-const ReviewForm = ({ setReviews, reviews, guide }) => {
+const ReviewForm = ({
+  setReviews,
+  reviews,
+  guide,
+  editingReview,
+  setEditingReview,
+}) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
+  const [username, setUsername] = useState("");
   const { user } = useContext(userContext);
+  const [hasReviewed, setHasReviewed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (editingReview) {
+      setComment(editingReview.comment);
+      setRating(editingReview.rating);
+    } else {
+      setComment("");
+      setRating("Rating");
+    }
+  }, [editingReview]);
+
+  useEffect(() => {
+    if (user) {
+      const userReview = reviews.find((review) => review.user_id === user.id);
+      if (userReview) {
+        setHasReviewed(true);
+      } else {
+        setHasReviewed(false);
+      }
+    }
+  }, [reviews, user]);
+
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+  const date = new Date();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch("http://127.0.0.1:5555/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          rating: rating,
-          comment: comment,
-          destination_id: guide.id,
-          user_id: user.id,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("You need to be logged in to provide a review.");
+    if (editingReview) {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:5555/reviews/${editingReview.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ comment, rating }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to update review.");
+        }
+        const updatedReview = await response.json();
+        setReviews(
+          reviews.map((r) => (r.id === editingReview.id ? updatedReview : r))
+        );
+        setEditingReview(null);
+      } catch (error) {
+        console.error("Error updating review:", error);
       }
-      const data = await response.json();
-      setReviews([...reviews, data]);
-      setRating("");
-      setComment("");
-    } catch (error) {
-      console.error("Error posting review:", error);
-      setErrorMessage("You need to be logged in to provide a review.");
+    } else {
+      try {
+        const response = await fetch("http://127.0.0.1:5555/reviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            rating: rating,
+            comment: comment,
+            destination_id: guide.id,
+            user_id: user.id,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error("You need to be logged in to provide a review.");
+        }
+        const data = await response.json();
+        setReviews([...reviews, data]);
+        setRating("Rating");
+        setComment("");
+        setUsername("");
+      } catch (error) {
+        console.error("Error posting review:", error);
+        setErrorMessage("You need to be logged in to provide a review.");
+      }
     }
   };
 
@@ -42,9 +106,9 @@ const ReviewForm = ({ setReviews, reviews, guide }) => {
       onSubmit={handleSubmit}
     >
       <h4>Write your review</h4>
-      <div class="row">
+      <div className="row">
         <div className="col">
-          <label for="usernameInput" class="form-label">
+          <label for="usernameInput" className="form-label">
             Username
           </label>
           <input
@@ -52,16 +116,20 @@ const ReviewForm = ({ setReviews, reviews, guide }) => {
             className="form-control col-auto"
             id="usernameInput"
             placeholder="Username"
+            defaultValue={user ? user.username : ""}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className="col input-group pt-3 mt-3" style={{ height: "2vh" }}>
-          <span class="input-group-text" for="inputGroupSelect01">
-            <i class="bi bi-star"></i>
+          <span className="input-group-text" for="inputGroupSelect01">
+            <i className="bi bi-star"></i>
           </span>
           <select
             className="form-select"
             aria-label="Default select example"
             id="inputGroupSelect01"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
           >
             <option selected>Rating</option>
             <option value="1">1</option>
@@ -73,19 +141,33 @@ const ReviewForm = ({ setReviews, reviews, guide }) => {
         </div>
       </div>
       <div className="mt-3">
-        <label for="textarea" class="form-label">
+        <label for="textarea" className="form-label">
           Review
         </label>
         <textarea
-          class="form-control"
+          className="form-control"
           id="textarea"
           rows="3"
           placeholder="Review..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         ></textarea>
       </div>
-      <button type="submit" class="btn btn-primary mt-2">
-        Submit
-      </button>
+      {
+        <button
+          type="submit"
+          className="btn btn-primary mt-2"
+          disabled={hasReviewed && !editingReview}
+        >
+          {!editingReview ? "Submit" : "Edit"}
+        </button>
+      }
+      {hasReviewed && !editingReview && (
+        <small style={{ color: "#ced2d8" }}>
+          <br />
+          You can only write a review once
+        </small>
+      )}
     </form>
   );
 };

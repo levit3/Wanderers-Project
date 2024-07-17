@@ -114,7 +114,7 @@ class Review(db.Model, SerializerMixin):
   destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
   rating = db.Column(db.Integer, nullable=False)
   comment = db.Column(db.String, nullable=False)
-  date = db.Column(db.Date, server_default = func.now())
+  date = db.Column(db.Date, server_default=func.current_date())
   
   user = db.relationship('User', back_populates='reviews')
   destination = db.relationship('Destination', back_populates='reviews')
