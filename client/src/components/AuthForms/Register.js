@@ -4,6 +4,7 @@ import "./Auth.css";
 import Login from "./Login";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar";
 const api = "http://127.0.0.1:5555";
 
 const Register = () => {
@@ -38,48 +39,51 @@ const Register = () => {
   /*** Handle Same username/email ***/
 
   return (
-    <div className="form-container-signup" onSubmit={handleSubmit}>
-      <p className="title">Sign up</p>
-      <form className="form">
-        <input
-          type="email"
-          className="input"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          required
-        />
-        <input
-          type="text"
-          className="input"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-          required
-        />
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          required
-        />
-        <button className="form-btn">Sign up</button>
-      </form>
-      {{ messages } && <p style={{ color: "green" }}>messages</p>}
-      <p className="sign-up-label">
-        Already have an account?
-        <a className="sign-up-link" href="/login">
-          Login
-        </a>
-      </p>
+    <div>
+      <NavBar />
+      <div className="form-container-signup" onSubmit={handleSubmit}>
+        <p className="title">Sign up</p>
+        <form className="form">
+          <input
+            type="email"
+            className="input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            required
+          />
+          <input
+            type="text"
+            className="input"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            required
+          />
+          <input
+            type="password"
+            className="input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            required
+          />
+          <button className="form-btn">Sign up</button>
+        </form>
+        {{ messages } && <p style={{ color: "green" }}>{messages}</p>}
+        <p className="sign-up-label">
+          Already have an account?
+          <a className="sign-up-link" href="/login">
+            Login
+          </a>
+        </p>
+      </div>
     </div>
   );
 };
