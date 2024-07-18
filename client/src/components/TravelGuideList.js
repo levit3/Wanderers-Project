@@ -1,4 +1,3 @@
-// TravelGuideList.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
@@ -10,6 +9,8 @@ const TravelGuideList = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
   const [displayItem, setDisplayItem] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     fetchGuides();
@@ -44,47 +45,71 @@ const TravelGuideList = () => {
   };
 
   function handleSearch(event) {
+    const value = event.target.value.toLowerCase();
+    setSearchValue(value);
+
     const filteredGuides = guides.filter((guide) =>
-      guide.name.toLowerCase().includes(event.target.value.toLowerCase())
+      guide.name.toLowerCase().includes(value)
     );
+
+    if (filteredGuides.length === 0) {
+      setNotification("No items found");
+    } else {
+      setNotification("");
+    }
+
     setDisplayItem(filteredGuides);
   }
 
+  const introText =
+    "Welcome to Wanderers! Discover amazing travel destinations and read reviews from fellow travelers.";
+
   return (
-<<<<<<< HEAD
     <>
       <div className="guide-list">
         <NavBar />
-
         <div className="card-container">
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              style={{ width: "50ox" }}
-            />
-            <button
-              className="btn btn-outline-success text-white"
-              type="submit"
-            >
-              Search
-            </button>
-          </form>
           <main id="main">
-            {guides.map((guide) => (
+            <form
+              className="search-form"
+              role="search"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                className="search-input"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={searchValue}
+                onChange={handleSearch}
+              />
+              <button className="search-button" type="submit">
+                Search
+              </button>
+            </form>
+            {notification && <p className="notification">{notification}</p>}
+            <p className="intro-text">
+              {introText.split("").map((char, index) => (
+                <span
+                  key={index}
+                  style={{ animationDelay: `${index * 0.01}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </p>
+
+            {displayItem.map((guide) => (
               <div key={guide.id} className="destination-card">
                 <img
                   src={`http://127.0.0.1:5555/static/uploads/Untitled design (${
                     guide.id - 1
                   }).png`}
-                  alt="image"
+                  alt="imge"
                 />
                 <h2>{guide.name}</h2>
                 <p>{guide.description}</p>
                 <Link to={`/travelguides/${guide.id}`}>
-                  {" "}
                   Find out more
                   <span className="material-symbols-outlined">
                     arrow_right_alt
@@ -94,33 +119,6 @@ const TravelGuideList = () => {
             ))}
           </main>
         </div>
-=======
-    <div className="guide-list">
-      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-      <Search handleSearch={handleSearch} />
-      <div className="card-container">
-        <main id="main">
-          {displayItem.map((guide) => (
-            <div key={guide.id} className="destination-card">
-              <img
-                src={`http://127.0.0.1:5555/static/uploads/Untitled design (${
-                  guide.id - 1
-                }).png`}
-                alt="image"
-              />
-              <h2>{guide.name}</h2>
-              <p>{guide.description}</p>
-              <Link to={`/travelguides/${guide.id}`}>
-                {" "}
-                Find out more
-                <span className="material-symbols-outlined">
-                  arrow_right_alt
-                </span>
-              </Link>
-            </div>
-          ))}
-        </main>
->>>>>>> 42f66edf768b9ffc35ac9841b4ef254d4800149f
       </div>
       <footer className="contact">
         <h2>Contact Us</h2>
