@@ -10,48 +10,100 @@ from config import db, bcrypt
 
 
 # Models go here!
-class User(db.Model, SerializerMixin):
-	__tablename__ = 'users'
+# class User(db.Model, SerializerMixin):
+# 	__tablename__ = 'users'
  
-	serialize_rules = ['-reviews.user', '-destinations.destination']
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String, unique=True, nullable=False)
-	email = db.Column(db.String, unique=True, nullable=False)
-	_password = db.Column(db.String, nullable=False)
+# 	serialize_rules = ['-reviews.user', '-destinations.destination']
+# 	id = db.Column(db.Integer, primary_key=True)
+# 	username = db.Column(db.String, unique=True, nullable=False)
+# 	email = db.Column(db.String, unique=True, nullable=False)
+# 	_password = db.Column(db.String, nullable=False)
 
-	reviews = db.relationship('Review', back_populates = 'user')
-	destinations = association_proxy('reviews', 'destination')
+# 	reviews = db.relationship('Review', back_populates = 'user')
+# 	destinations = association_proxy('reviews', 'destination')
  
-	@validates('email')
-	def validate_email(self, key, email):
-		if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-			raise ValueError('Invalid email address')
-		return email
+# 	@validates('email')
+# 	def validate_email(self, key, email):
+# 		if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+# 			raise ValueError('Invalid email address')
+# 		return email
 
-	@validates('password')
-	def validate_password(self, key, password):
-		if len(password) < 8:
-			raise ValueError('Password must be at least 8 characters long')
-		return password
+# 	@validates('password')
+# 	def validate_password(self, key, password):
+# 		if len(password) < 8:
+# 			raise ValueError('Password must be at least 8 characters long')
+# 		return password
 
-	@hybrid_property
-	def password(self):
-			return self._password
+# 	@hybrid_property
+# 	def password(self):
+# 			return self._password
  
-	@password.setter
-	def password(self, password):
-		password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-		self._password = password_hash.decode('utf-8')
+# 	@password.setter
+# 	def password(self, password):
+# 		password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+# 		self._password = password_hash.decode('utf-8')
   
-	def authenticate(self, password):
-		return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
+# 	def authenticate(self, password):
+# 		return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
    
-	@validates('username')
-	def validate_username(self, key, username):
-		user = User.query.filter_by(username=username).first()
-		if user:
-			raise ValueError('Username already exists')
-		return username
+# 	@validates('username')
+# 	def validate_username(self, key, username):
+# 		user = User.query.filter_by(username=username).first()
+# 		if user:
+# 			raise ValueError('Username already exists')
+# 		return username
+
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'users'
+    
+    serialize_rules = ['-reviews.user', '-destinations.destination']
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
+    _password = db.Column(db.String, nullable=False)
+    
+    reviews = db.relationship('Review', back_populates='user')
+    destinations = association_proxy('reviews', 'destination')
+    
+    @validates('email')
+    def validate_email(self, key, email):
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            raise ValueError('Invalid email address')
+        existing_email = User.query.filter_by(email=email).first()
+        if existing_email:
+            raise ValueError('Email already exists')
+        return email
+    
+   
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self, password):
+        if len(password) < 8:
+            raise ValueError('Password must be at least 8 characters long')
+        if not re.search(r"[A-Z]", password):
+            raise ValueError("Password must include at least one uppercase letter")
+        if not re.search(r"[a-z]", password):
+            raise ValueError("Password must include at least one lowercase letter")
+        if not re.search(r"[0-9]", password):
+            raise ValueError("Password must include at least one number")
+        if not re.search(r"[\W_]", password):
+            raise ValueError("Password must include at least one special character")
+        
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
+    
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password, password.encode('utf-8'))
+    
+    @validates('username')
+    def validate_username(self, key, username):
+        user = User.query.filter_by(username=username).first()
+        if user:
+            raise ValueError('Username already exists')
+        return username
 
   
 class Destination(db.Model, SerializerMixin):

@@ -53,7 +53,9 @@ const TravelGuideList = () => {
     );
 
     if (filteredGuides.length === 0) {
-      setNotification("No items found");
+      setNotification(
+        "The item you searched did not match any in our database."
+      );
     } else {
       setNotification("");
     }

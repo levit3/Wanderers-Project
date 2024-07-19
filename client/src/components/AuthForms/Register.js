@@ -11,6 +11,28 @@ const Register = () => {
   const [messages, setMessages] = useState("");
   const navigate = useNavigate();
 
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault();
+  //     try {
+  //       const response = await fetch("/register", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ username, email, password }),
+  //       });
+  //       if (!response.ok) {
+  //         const errorData = await response.json();
+  //         throw new Error(errorData.error || "Registration failed");
+  //       }
+  //       const userData = await response.json();
+  //       setMessages("Successfully registered");
+  //       navigate("/login");
+  //     } catch (error) {
+  //       console.error("Error registering:", error);
+  //       setMessages(error.message);
+  //     }
+  //   };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -22,13 +44,15 @@ const Register = () => {
         body: JSON.stringify({ username, email, password }),
       });
       if (!response.ok) {
-        throw new Error("Registration failed");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Registration failed");
       }
       const userData = await response.json();
       setMessages("Successfully registered");
       navigate("/login");
     } catch (error) {
       console.error("Error registering:", error);
+      setMessages(error.message);
     }
   };
 
@@ -71,14 +95,15 @@ const Register = () => {
             required
           />
           <button className="form-btn">Sign up</button>
+
+          <p className="sign-up-label">
+            Already have an account?
+            <a className="sign-up-link" href="/login">
+              Login
+            </a>
+          </p>
+          {{ messages } && <p style={{ color: "red" }}>{messages}</p>}
         </form>
-        {{ messages } && <p style={{ color: "green" }}>{messages}</p>}
-        <p className="sign-up-label">
-          Already have an account?
-          <a className="sign-up-link" href="/login">
-            Login
-          </a>
-        </p>
       </div>
     </div>
   );
