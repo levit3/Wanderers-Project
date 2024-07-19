@@ -24,8 +24,7 @@ const Login = () => {
         throw new Error("Registration failed");
       }
       const userData = await response.json();
-      console.log("Registration successful:", userData);
-      navigate("/travelguides");
+      console.log("Login successful:", userData);
     } catch (error) {
       console.error("Error registering:", error);
       setErrorMessage("Invalid username or password");
@@ -65,7 +64,9 @@ const Login = () => {
               {errorMessage}
             </p>
           )}
-          <button className="form-btn">Log in</button>
+          <button className="form-btn" onClick={() => navigate(-1)}>
+            Log in
+          </button>{" "}
         </form>
         <p className="sign-up-label">
           Don't have an account?

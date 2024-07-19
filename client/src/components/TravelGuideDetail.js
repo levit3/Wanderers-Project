@@ -117,7 +117,12 @@ const TravelGuideDetail = () => {
   }, []);
 
   if (!guide) {
-    return <div>Loading...</div>;
+    return (
+      <div className="spinner-container">
+        <div className="spinner"></div>
+        <p className="spinner-text">Please wait! Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -129,7 +134,7 @@ const TravelGuideDetail = () => {
         <img
           className="img-fluid rounded-bottom image"
           src={guide.link}
-          alt="image"
+          alt="imge"
           width="100%"
         />
         <div className="scroll-arrow" onClick={handleScroll}>
