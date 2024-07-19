@@ -67,7 +67,7 @@ const TravelGuideList = () => {
   return (
     <>
       <div className="guide-list">
-        <NavBar />
+        <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className="card-container">
           <main id="main">
             <form
@@ -120,7 +120,7 @@ const TravelGuideList = () => {
           </main>
         </div>
       </div>
-      <footer className="contact">
+      <footer className="contact" style={{ bottom: "0px" }}>
         <h2>Contact Us</h2>
         <p>Email: wanderers.info@gmail.com</p>
         <p>Phone: +25411456789</p>

@@ -10,7 +10,7 @@ const ReviewForm = ({
 }) => {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(user.username);
   const [hasReviewed, setHasReviewed] = useState(false);
   const [error, setErrorMessage] = useState("");
 
@@ -37,7 +37,7 @@ const ReviewForm = ({
 
   function formatDate(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
