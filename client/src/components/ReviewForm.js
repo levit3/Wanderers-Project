@@ -90,11 +90,12 @@ const ReviewForm = ({
           setComment("");
           setUsername("");
         } catch (error) {
-          console.error("Error posting review:", error);
-          setErrorMessage("You need to be logged in to provide a review.");
+          console.error("Error posting review:", error.message);
         }
       } else {
-        setErrorMessage("Unauthorized access.");
+        setErrorMessage(
+          "Failed to post review. Check if you have logged in and confirm your username is correct"
+        );
       }
     }
   };
@@ -133,6 +134,7 @@ const ReviewForm = ({
             id="inputGroupSelect01"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
+            required
           >
             <option selected>Rating</option>
             <option value="1">1</option>
@@ -153,7 +155,10 @@ const ReviewForm = ({
           rows="3"
           placeholder="Review..."
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => {
+            setComment(e.target.value);
+            setErrorMessage("");
+          }}
         ></textarea>
       </div>
       {
