@@ -63,43 +63,30 @@ const TravelGuideList = () => {
     setDisplayItem(filteredGuides);
   }
 
-  const introText =
-    "Welcome to Wanderers! Discover amazing travel destinations and read reviews from fellow travelers.";
-
   return (
     <>
       <div className="guide-list">
         <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className="card-container">
+          <form
+            className="search-form"
+            role="search"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <input
+              className="search-input"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              value={searchValue}
+              onChange={handleSearch}
+            />
+            <button className="search-button" type="submit">
+              Search
+            </button>
+          </form>
           <main id="main">
-            <form
-              className="search-form"
-              role="search"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                className="search-input"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                value={searchValue}
-                onChange={handleSearch}
-              />
-              <button className="search-button" type="submit">
-                Search
-              </button>
-            </form>
             {notification && <p className="notification">{notification}</p>}
-            <p className="intro-text">
-              {introText.split("").map((char, index) => (
-                <span
-                  key={index}
-                  style={{ animationDelay: `${index * 0.01}s` }}
-                >
-                  {char}
-                </span>
-              ))}
-            </p>
 
             {displayItem.map((guide) => (
               <div key={guide.id} className="destination-card">

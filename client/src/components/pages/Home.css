@@ -4,11 +4,26 @@
   padding-bottom: 20px;
   background-color: #ffffff;
 }
+.intro-text span {
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  animation: typing 0.01s forwards;
+}
+
+@keyframes typing {
+  to {
+    opacity: 1;
+  }
+}
 
 .header {
   background-color: #009688;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
   color: #ffffff;
   padding: 20px;
   margin-bottom: 20px;

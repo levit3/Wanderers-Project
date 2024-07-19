@@ -187,48 +187,6 @@ class Logout(Resource):
         return {'message': 'Logged out successfully'}, 204
     
     
-# class Register(Resource):
-
-#     def post(self):
-#         data = request.get_json()
-
-        
-#         if not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
-#             return make_response({'error': 'Invalid email format'}, 400)
-        
-
-       
-#         existing_user = User.query.filter_by(username=data['username']).first()
-#         if existing_user:
-#             return make_response({'error': 'Username already exists'}, 400)
-        
-#         existing_email = User.query.filter_by(email=data['email']).first()
-#         if existing_email:
-#             return make_response({'error': 'Email already exists'}, 400)
-       
-#         if not self.is_password_strong(data['password']):
-#             return make_response({'error': 'Password MUST be at least 8 characters long, include uppercase, lowercase, numbers, and special characters.'}, 400)
-
-#         try:
-#             user = User(username=data['username'], email=data['email'], password=data['password'])
-#             db.session.add(user)
-#             db.session.commit()
-#             return make_response(user.to_dict(), 201)
-#         except ValueError as e:
-#             return make_response({'error': str(e)}, 400)
-
-#     def is_password_strong(self, password):
-#         if len(password) < 8:
-#             return False
-#         if not re.search(r"[A-Z]", password):
-#             return False
-#         if not re.search(r"[a-z]", password):
-#             return False
-#         if not re.search(r"[0-9]", password):
-#             return False
-#         if not re.search(r"[\W_]", password): 
-#             return False
-#         return True
 class Register(Resource):
     def post(self):
         data = request.get_json()
