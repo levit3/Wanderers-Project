@@ -53,7 +53,9 @@ const TravelGuideList = () => {
     );
 
     if (filteredGuides.length === 0) {
-      setNotification("No items found");
+      setNotification(
+        "The item you searched did not match any in our database."
+      );
     } else {
       setNotification("");
     }
@@ -67,7 +69,7 @@ const TravelGuideList = () => {
   return (
     <>
       <div className="guide-list">
-        <NavBar />
+        <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className="card-container">
           <main id="main">
             <form

@@ -42,8 +42,8 @@ const Home = () => {
 
   return (
     <>
+      <NavBar />
       <div className="landing-page">
-        <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <header className="header">
           <h3>Welcome to our Travel Review Website. </h3>
           {!loggedIn && (
