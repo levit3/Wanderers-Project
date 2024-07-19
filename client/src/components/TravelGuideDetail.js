@@ -171,7 +171,7 @@ const TravelGuideDetail = () => {
                       </div>
                     </div>
                     {user.id === g.user.id && (
-                      <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-2 mx-2">
                         <button
                           className="btn btn-outline-info"
                           onClick={() => handleEdit(g)}

@@ -23,7 +23,7 @@ function NavBar({ setLoggedIn, loggedIn }) {
         style={{ backgroundColor: "#252932" }}
       >
         <div className="container">
-          <a className="navbar-brand px-4 text-white" href="/">
+          <Link to="/" className="navbar-brand px-4 text-white">
             <img
               className="image-fluid me-2 "
               src={backpackIcon}
@@ -32,7 +32,7 @@ function NavBar({ setLoggedIn, loggedIn }) {
               height="30"
             />
             Wanderers
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -56,23 +56,34 @@ function NavBar({ setLoggedIn, loggedIn }) {
                   Reviews
                 </Link>
               </li>
-           <li className="nav-item">
+              <li className="nav-item">
                 <Link className="nav-link text-white" to="/about">
                   About
                 </Link>
               </li>
-
-              {loggedIn && (
+            </ul>
+            {loggedIn ? (
+              <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <button
-                    className="nav-link text-white"
+                    className="btn nav-link text-white btn-outline-danger "
                     onClick={handleLogout}
                   >
                     Logout
                   </button>
                 </li>
-              )}
-            </ul>
+              </ul>
+            ) : (
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link to="/login" style={{ textDecoration: "none" }}>
+                    <button className="btn nav-link text-white btn-outline-success ">
+                      Login/Signup
+                    </button>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>
