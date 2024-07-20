@@ -9,8 +9,8 @@ fake = Faker()
 import os
 
 # Local imports
-from app import app
-from models import db, User, Destination, Review
+from server.app import app
+from server.models import db, User, Destination, Review
 
 def make_users():
     print("Seeding users...") 
