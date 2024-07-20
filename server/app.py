@@ -6,6 +6,7 @@
 from flask import request, make_response, send_from_directory, session
 from flask_restful import Resource
 import os
+import re
 
 
 # Local imports
@@ -13,10 +14,19 @@ from server.config import app, db, api
 # Add your model imports
 from server.models import db, User, Destination, Review
 
+def get_next_filename(ext):
+    existing_files = [f for f in os.listdir(app.config['UPLOAD_FOLDER'])]
+    count = 0
+    for filename in existing_files:
+        count+=1
+    next_number = count
+    new_filename = f"Untitled design ({next_number}).{ext}"
+    return new_filename
+
 def allowed_file(filename):
    if '.' not in filename:
        return False
-   ext = filename.rsplit('.', 1)[1].lower()
+   ext = os.path.splitext(filename)[1].lower()
    return ext in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/')
@@ -72,7 +82,9 @@ class Destinations(Resource):
             return make_response({'error': 'Invalid image file'}, 400)
         
         file = request.files['file']
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        ext = os.path.splitext(file.filename)[1].lower()
+        new_filename = get_next_filename(ext)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
         file.save(file_path)
         
         data = request.json
