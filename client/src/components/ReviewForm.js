@@ -51,16 +51,20 @@ const ReviewForm = ({
     if (editingReview) {
       try {
         if (values.username === user.username) {
-          const response = await fetch(`/api/reviews/${editingReview.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              comment: values.comment,
-              rating: values.rating,
-            }),
-          });
+          const response = await fetch(
+            `${API_URL}/reviews/${editingReview.id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                comment: values.comment,
+                rating: values.rating,
+              }),
+              credentials: "include",
+            }
+          );
           if (!response.ok) {
             throw new Error("Failed to update review.");
           }
@@ -81,7 +85,7 @@ const ReviewForm = ({
     } else {
       if (values.username === user.username) {
         try {
-          const response = await fetch(`/api/reviews`, {
+          const response = await fetch(`${API_URL}/reviews`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -92,6 +96,7 @@ const ReviewForm = ({
               destination_id: guide.id,
               user_id: user.id,
             }),
+            credentials: "include",
           });
           if (!response.ok) {
             throw new Error("You need to be logged in to provide a review.");

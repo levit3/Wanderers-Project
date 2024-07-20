@@ -32,7 +32,7 @@ const TravelGuideDetail = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       try {
-        const response = await fetch(`/api/check-session`);
+        const response = await fetch(`${API_URL}/check-session`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -50,7 +50,9 @@ const TravelGuideDetail = () => {
   useEffect(() => {
     const fetchGuide = async () => {
       try {
-        const response = await fetch(`/api/destinations/${id}`);
+        const response = await fetch(`${API_URL}/destinations/${id}`, {
+          credentials: "include",
+        });
         const data = await response.json();
         setGuide(data);
         setReviews(data.reviews);
@@ -72,11 +74,12 @@ const TravelGuideDetail = () => {
 
   const handleDelete = async (reviewId) => {
     try {
-      const response = await fetch(`/api/reviews/${reviewId}`, {
+      const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       if (!response.ok) {
         throw new Error("Failed to delete review.");

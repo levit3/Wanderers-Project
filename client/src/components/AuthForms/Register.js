@@ -39,12 +39,13 @@ const Register = () => {
           validationSchema={formSchema}
           onSubmit={async (values) => {
             try {
-              const response = await fetch(`/api/register`, {
+              const response = await fetch(`${API_URL}/register`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(values, null, 2),
+                credentials: "include",
               });
               if (!response.ok) {
                 const errorData = await response.json();

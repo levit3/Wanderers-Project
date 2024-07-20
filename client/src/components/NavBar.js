@@ -8,8 +8,9 @@ function NavBar({ setLoggedIn, loggedIn }) {
 
   function handleLogout() {
     const logout = async () => {
-      const response = await fetch(`/api/logout`, {
+      const response = await fetch(`${API_URL}/logout`, {
         method: "DELETE",
+        credentials: "include",
       });
       setLoggedIn(false);
       navigate("/");
