@@ -20,7 +20,7 @@ const TravelGuideList = () => {
 
   const fetchGuides = async () => {
     try {
-      const response = await fetch(`${API_URL}/destinations`);
+      const response = await fetch(`/api/destinations`);
       const data = await response.json();
       setGuides(data);
       setDisplayItem(data);
@@ -31,7 +31,7 @@ const TravelGuideList = () => {
 
   const fetchSessionData = async () => {
     try {
-      const response = await fetch(`${API_URL}/check-session`);
+      const response = await fetch(`/api/check-session`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
