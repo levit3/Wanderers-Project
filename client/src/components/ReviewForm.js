@@ -52,7 +52,7 @@ const ReviewForm = ({
       try {
         if (values.username === user.username) {
           const response = await fetch(
-            `/${API_URL}/reviews/${editingReview.id}`,
+            `${API_URL}/reviews/${editingReview.id}`,
             {
               method: "PATCH",
               headers: {
@@ -84,7 +84,7 @@ const ReviewForm = ({
     } else {
       if (values.username === user.username) {
         try {
-          const response = await fetch(`/${API_URL}/reviews`, {
+          const response = await fetch(`${API_URL}/reviews`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
