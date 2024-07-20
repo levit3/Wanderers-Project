@@ -5,6 +5,8 @@ import ReviewForm from "./ReviewForm";
 import "./Detail.css";
 import NavBar from "./NavBar";
 
+const API_URL = process.env.SERVER_API_URL;
+
 const renderStars = (rating) => {
   const stars = [];
   for (let i = 1; i <= 5; i++) {
@@ -48,7 +50,7 @@ const TravelGuideDetail = () => {
   useEffect(() => {
     const fetchGuide = async () => {
       try {
-        const response = await fetch(`/destinations/${id}`);
+        const response = await fetch(`${API_URL}/destinations/${id}`);
         const data = await response.json();
         setGuide(data);
         setReviews(data.reviews);
@@ -70,7 +72,7 @@ const TravelGuideDetail = () => {
 
   const handleDelete = async (reviewId) => {
     try {
-      const response = await fetch(`/reviews/${reviewId}`, {
+      const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

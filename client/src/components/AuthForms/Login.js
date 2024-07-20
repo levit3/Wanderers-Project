@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
+const API_URL = process.env.SERVER_API_URL;
 
 const FormSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -32,7 +33,7 @@ const Login = () => {
           validationSchema={FormSchema}
           onSubmit={async (values) => {
             try {
-              const response = await fetch("/login", {
+              const response = await fetch(`${API_URL}/login`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

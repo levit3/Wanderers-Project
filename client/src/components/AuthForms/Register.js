@@ -6,6 +6,8 @@ import NavBar from "../NavBar";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 
+const API_URL = process.env.SERVER_API_URL;
+
 const formSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
   email: yup
@@ -37,7 +39,7 @@ const Register = () => {
           validationSchema={formSchema}
           onSubmit={async (values) => {
             try {
-              const response = await fetch("/register", {
+              const response = await fetch(`${API_URL}/register`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

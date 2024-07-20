@@ -221,16 +221,16 @@ class CheckSession(Resource):
             return {'error': 'Session expired'}, 401
     
     
-api.add_resource(Users, '/users')
-api.add_resource(Destinations, '/destinations')
-api.add_resource(Reviews, '/reviews')
-api.add_resource(UserByID, '/users/<int:id>')
-api.add_resource(DestinationByID, '/destinations/<int:id>')
-api.add_resource(ReviewByID, '/reviews/<int:id>')
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
-api.add_resource(CheckSession, '/check-session')
-api.add_resource(Register, '/register')
+api.add_resource(Users, '/api/users')
+api.add_resource(Destinations, '/api/destinations')
+api.add_resource(Reviews, '/api/reviews')
+api.add_resource(UserByID, '/api/users/<int:id>')
+api.add_resource(DestinationByID, '/api/destinations/<int:id>')
+api.add_resource(ReviewByID, '/api/reviews/<int:id>')
+api.add_resource(Login, '/api/login')
+api.add_resource(Logout, '.api/logout')
+api.add_resource(CheckSession, '/api/check-session')
+api.add_resource(Register, '/api/register')
     
 
 if __name__ == '__main__':

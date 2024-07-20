@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "./List.css";
 
+const API_URL = process.env.SERVER_API_URL;
+
 const TravelGuideList = () => {
   const [guides, setGuides] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -18,7 +20,7 @@ const TravelGuideList = () => {
 
   const fetchGuides = async () => {
     try {
-      const response = await fetch("/destinations");
+      const response = await fetch(`${API_URL}/destinations`);
       const data = await response.json();
       setGuides(data);
       setDisplayItem(data);

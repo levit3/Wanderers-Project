@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 
+const API_URL = process.env.SERVER_API_URL;
+
 const ReviewForm = ({
   setReviews,
   reviews,
@@ -49,16 +51,19 @@ const ReviewForm = ({
     if (editingReview) {
       try {
         if (values.username === user.username) {
-          const response = await fetch(`/reviews/${editingReview.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              comment: values.comment,
-              rating: values.rating,
-            }),
-          });
+          const response = await fetch(
+            `${API_URL}/reviews/${editingReview.id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                comment: values.comment,
+                rating: values.rating,
+              }),
+            }
+          );
           if (!response.ok) {
             throw new Error("Failed to update review.");
           }
@@ -79,7 +84,7 @@ const ReviewForm = ({
     } else {
       if (values.username === user.username) {
         try {
-          const response = await fetch("/reviews", {
+          const response = await fetch(`${API_URL}/reviews`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
