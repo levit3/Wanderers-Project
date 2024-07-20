@@ -9,9 +9,9 @@ import os
 
 
 # Local imports
-from config import app, db, api
+from server.config import app, db, api
 # Add your model imports
-from models import db, User, Destination, Review
+from server.models import db, User, Destination, Review
 
 def allowed_file(filename):
    if '.' not in filename:
