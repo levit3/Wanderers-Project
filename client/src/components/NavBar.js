@@ -1,13 +1,14 @@
 import React from "react";
 import backpackIcon from "../images/backpack2.svg";
 import { Link, useNavigate } from "react-router-dom";
+const API_URL = process.env.SERVER_API_URL;
 
 function NavBar({ setLoggedIn, loggedIn }) {
   const navigate = useNavigate();
 
   function handleLogout() {
     const logout = async () => {
-      const response = await fetch("/logout", {
+      const response = await fetch(`/${API_URL}/logout`, {
         method: "DELETE",
       });
       setLoggedIn(false);

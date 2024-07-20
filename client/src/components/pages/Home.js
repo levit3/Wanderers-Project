@@ -2,6 +2,7 @@ import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
 import { useEffect, useState } from "react";
+const API_URL = process.env.SERVER_API_URL;
 
 const Home = () => {
   const [error, setError] = useState("");
@@ -22,14 +23,13 @@ const Home = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       try {
-        const response = await fetch("/check-session");
+        const response = await fetch(`/${API_URL}/check-session`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
 
         const data = await response.json();
-        console.log(data);
         setLoggedIn(true);
       } catch (error) {
         setError(error.message);

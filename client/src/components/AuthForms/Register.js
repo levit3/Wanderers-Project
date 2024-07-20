@@ -39,7 +39,7 @@ const Register = () => {
           validationSchema={formSchema}
           onSubmit={async (values) => {
             try {
-              const response = await fetch(`${API_URL}/register`, {
+              const response = await fetch(`/${API_URL}/register`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

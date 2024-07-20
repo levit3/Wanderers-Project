@@ -20,7 +20,7 @@ const TravelGuideList = () => {
 
   const fetchGuides = async () => {
     try {
-      const response = await fetch(`${API_URL}/destinations`);
+      const response = await fetch(`/${API_URL}/destinations`);
       const data = await response.json();
       setGuides(data);
       setDisplayItem(data);
@@ -31,7 +31,7 @@ const TravelGuideList = () => {
 
   const fetchSessionData = async () => {
     try {
-      const response = await fetch("/check-session");
+      const response = await fetch(`/${API_URL}/check-session`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -92,7 +92,7 @@ const TravelGuideList = () => {
             {displayItem.map((guide) => (
               <div key={guide.id} className="destination-card">
                 <img
-                  src={`http://127.0.0.1:5555/static/uploads/Untitled design (${
+                  src={`https://wanderers-project.onrender.com/api/static/uploads/Untitled design (${
                     guide.id - 1
                   }).png`}
                   alt="imge"
