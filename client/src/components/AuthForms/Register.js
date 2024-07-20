@@ -49,7 +49,7 @@ const Register = () => {
                 throw new Error(errorData.error || "Registration failed");
               }
               setSuccessMessage("Successfully registered. Redirecting...");
-              setTimeout(() => navigate("/login"), 1500);
+              setTimeout(() => navigate("/travelguides"), 1500);
             } catch (error) {
               setErrorMessage(error.message);
               console.log(error.message);
@@ -64,7 +64,6 @@ const Register = () => {
                 className="input"
                 placeholder="Email"
                 value={values.email}
-                onChange={handleChange}
               />
               <ErrorMessage
                 name="email"
@@ -78,7 +77,6 @@ const Register = () => {
                 className="input"
                 placeholder="Username"
                 value={values.username}
-                onChange={handleChange}
               />
               <ErrorMessage
                 name="username"
@@ -92,7 +90,10 @@ const Register = () => {
                 className="input"
                 placeholder="Password"
                 value={values.password}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setErrorMessage("");
+                }}
               />
               <ErrorMessage
                 name="password"

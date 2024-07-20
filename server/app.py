@@ -173,7 +173,6 @@ class Login(Resource):
         if user:
             if user.authenticate(password):
                 session['user_id'] = user.id
-                print(session['user_id'])
                 return user.to_dict(), 200
             else:
                 return make_response({'error': 'Incorrect password'}, 401)
@@ -191,9 +190,10 @@ class Register(Resource):
     def post(self):
         data = request.get_json()
         try:
-            user = User(username=data['username'], email=data['email'], password=data['password'])
+            user = User(username=data['username'].title(), email=data['email'], password=data['password'])
             db.session.add(user)
             db.session.commit()
+            session['user_id'] = user.id
             return make_response(user.to_dict(), 201)
         except ValueError as e:
             return make_response({'error': str(e)}, 400)

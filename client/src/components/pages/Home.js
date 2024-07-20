@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
 import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const [error, setError] = useState("");

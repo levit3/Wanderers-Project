@@ -23,7 +23,6 @@ const TravelGuideDetail = () => {
   const [reviews, setReviews] = useState([]);
   const [average, setAverage] = useState(0);
   const [user, setUser] = useState("");
-  const [warning, setWarning] = useState("");
   const [editingReview, setEditingReview] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
@@ -47,27 +46,27 @@ const TravelGuideDetail = () => {
   }, []);
 
   useEffect(() => {
+    const fetchGuide = async () => {
+      try {
+        const response = await fetch(`/destinations/${id}`);
+        const data = await response.json();
+        setGuide(data);
+        setReviews(data.reviews);
+        if (data.reviews.length > 0) {
+          let summation = data.reviews.reduce(
+            (accumulator, r) => accumulator + r.rating,
+            0
+          );
+          let avg = summation / data.reviews.length;
+          setAverage(Math.round(avg * 10) / 10);
+        }
+      } catch (error) {
+        console.error("Error fetching guide:", error);
+      }
+    };
+
     fetchGuide();
   }, [id]);
-
-  const fetchGuide = async () => {
-    try {
-      const response = await fetch(`/destinations/${id}`);
-      const data = await response.json();
-      setGuide(data);
-      setReviews(data.reviews);
-      if (data.reviews.length > 0) {
-        let summation = data.reviews.reduce(
-          (accumulator, r) => accumulator + r.rating,
-          0
-        );
-        let avg = summation / data.reviews.length;
-        setAverage(Math.round(avg * 10) / 10);
-      }
-    } catch (error) {
-      console.error("Error fetching guide:", error);
-    }
-  };
 
   const handleDelete = async (reviewId) => {
     try {

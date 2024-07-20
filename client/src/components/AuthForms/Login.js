@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./Auth.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
@@ -40,7 +40,8 @@ const Login = () => {
                 body: JSON.stringify(values, null, 2),
               });
               if (!response.ok) {
-                throw new Error("Login failed");
+                const errorData = await response.json();
+                throw new Error(errorData.error);
               }
               const userData = await response.json();
               setSuccessMessage("Login successful. Redirecting...");

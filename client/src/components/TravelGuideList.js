@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "./List.css";
-import Search from "./Search";
 
 const TravelGuideList = () => {
   const [guides, setGuides] = useState([]);

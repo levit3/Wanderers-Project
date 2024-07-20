@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 // import App from "./components/App";
 import Home from "./components/pages/Home";
 import Login from "./components/AuthForms/Login";
@@ -12,7 +12,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import NavBar from "./components/NavBar";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
