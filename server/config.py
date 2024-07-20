@@ -18,6 +18,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_COOKIE_SAMESITE"] = None
 app.config["SESSION_COOKIE_SECURE"] = True
+app.config["UPLOAD_FOLDER"] = 'uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png', 'gif'}
+
 app.json.compact = False
 
 # Define metadata, instantiate db

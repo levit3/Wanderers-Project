@@ -5,7 +5,7 @@
 # Remote library imports
 from flask import request, make_response, send_from_directory, session
 from flask_restful import Resource
-import re
+import os
 
 
 # Local imports
@@ -13,7 +13,11 @@ from config import app, db, api
 # Add your model imports
 from models import db, User, Destination, Review
 
-
+def allowed_file(filename):
+   if '.' not in filename:
+       return False
+   ext = filename.rsplit('.', 1)[1].lower()
+   return ext in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/')
 def index():
@@ -64,9 +68,16 @@ class Destinations(Resource):
         return make_response(destinations, 200)
     
     def post(self):
+        if 'file' not in request.files or not allowed_file(request.files['file'].filename):
+            return make_response({'error': 'Invalid image file'}, 400)
+        
+        file = request.files['file']
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(file_path)
+        
         data = request.json
         try:
-            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=data['image'])
+            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=file_path)
             db.session.add(destination)
             db.session.commit()
             return make_response(destination.to_dict(), 201)
