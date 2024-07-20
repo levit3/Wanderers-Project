@@ -40,13 +40,25 @@ const Home = () => {
     fetchSessionData();
   });
 
+  const introText =
+    "Welcome to Wanderers! Discover amazing travel destinations and read reviews from fellow travelers.";
+
   return (
     <>
       <div>
         <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className="landing-page">
           <header className="header">
-            <h3>Welcome to our Travel Review Website. </h3>
+            <p className="intro-text">
+              {introText.split("").map((char, index) => (
+                <span
+                  key={index}
+                  style={{ animationDelay: `${index * 0.01}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </p>
           </header>
           <section className="featured-destination">
             <div className="box-card">
