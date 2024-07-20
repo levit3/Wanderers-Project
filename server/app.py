@@ -228,7 +228,7 @@ api.add_resource(UserByID, '/api/users/<int:id>')
 api.add_resource(DestinationByID, '/api/destinations/<int:id>')
 api.add_resource(ReviewByID, '/api/reviews/<int:id>')
 api.add_resource(Login, '/api/login')
-api.add_resource(Logout, '.api/logout')
+api.add_resource(Logout, '/api/logout')
 api.add_resource(CheckSession, '/api/check-session')
 api.add_resource(Register, '/api/register')
     
