@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       try {
-        const response = await fetch(`/check-session`);
+        const response = await fetch(`/api/check-session`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch data");
