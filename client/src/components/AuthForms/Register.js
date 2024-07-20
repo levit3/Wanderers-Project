@@ -3,83 +3,125 @@ import React, { useState } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
+
+const formSchema = yup.object().shape({
+  username: yup.string().required("Username is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password is too short - should be 8 chars minimum."),
+});
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [messages, setMessages] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Registration failed");
-      }
-      const userData = await response.json();
-      setMessages("Successfully registered");
-    } catch (error) {
-      console.error("Error registering:", error);
-      setMessages(error.message);
-    }
-  };
 
   return (
     <div>
       <NavBar />
-      <div className="form-container-signup" onSubmit={handleSubmit}>
+      <div className="form-container-signup">
         <p className="title">Sign up</p>
-        <form className="form">
-          <input
-            type="email"
-            className="input"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            required
-          />
-          <input
-            type="text"
-            className="input"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            required
-          />
-          <input
-            type="password"
-            className="input"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            required
-          />
-          {{ messages } && <p style={{ color: "red" }}>{messages}</p>}
-          <button className="form-btn" onClick={() => navigate(-2)}>
-            Sign up
-          </button>{" "}
-          <p className="sign-up-label">
-            Already have an account?
-            <a className="sign-up-link" href="/login">
-              Login
-            </a>
-          </p>
-        </form>
+        <Formik
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={formSchema}
+          onSubmit={async (values) => {
+            try {
+              const response = await fetch("/register", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values, null, 2),
+              });
+              if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Registration failed");
+              }
+              setSuccessMessage("Successfully registered. Redirecting...");
+              setTimeout(() => navigate("/login"), 1500);
+            } catch (error) {
+              setErrorMessage(error.message);
+              console.log(error.message);
+            }
+          }}
+        >
+          {({ handleSubmit, handleChange, values }) => (
+            <Form className="form" onSubmit={handleSubmit}>
+              <Field
+                type="email"
+                name="email"
+                className="input"
+                placeholder="Email"
+                value={values.email}
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="error"
+                style={{ color: "red", fontSize: "15px" }}
+              />
+              <Field
+                type="text"
+                name="username"
+                className="input"
+                placeholder="Username"
+                value={values.username}
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="error"
+                style={{ color: "red", fontSize: "15px" }}
+              />
+              <Field
+                type="password"
+                name="password"
+                className="input"
+                placeholder="Password"
+                value={values.password}
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="error"
+                style={{ color: "red", fontSize: "15px" }}
+              />
+              {errorMessage && (
+                <p style={{ color: "red", margin: "2px", fontSize: "14px" }}>
+                  {errorMessage}
+                </p>
+              )}
+              {successMessage && (
+                <p style={{ color: "green", margin: "2px", fontSize: "14px" }}>
+                  {successMessage}
+                </p>
+              )}
+              <button className="form-btn" type="submit">
+                Sign up
+              </button>
+              <p className="sign-up-label">
+                Already have an account?
+                <a className="sign-up-link" href="/login">
+                  Login
+                </a>
+              </p>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

@@ -71,10 +71,10 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.form-btn:hover {
+/* .form-btn:hover {
   box-shadow: rgba(20, 212, 255, 0.814) 0px 10px 25px;
   background-color: rgba(20, 212, 255, 0.814);
-}
+} */
 
 .form-btn:active {
   box-shadow: none;
@@ -98,4 +98,9 @@
   font-weight: 800;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.error {
+  font-size: 13px !important;
+  margin-top: 0 !important;
 }
