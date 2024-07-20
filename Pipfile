@@ -16,6 +16,7 @@ bcrypt-flask = "*"
 sqlalchemy-serializer = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+flask-session = "*"
 
 [requires]
 python_full_version = "3.8.13"
