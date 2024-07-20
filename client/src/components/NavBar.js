@@ -1,7 +1,7 @@
 import React from "react";
 import backpackIcon from "../images/backpack2.svg";
 import { Link, useNavigate } from "react-router-dom";
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 function NavBar({ setLoggedIn, loggedIn }) {
   const navigate = useNavigate();

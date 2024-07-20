@@ -5,7 +5,7 @@ import ReviewForm from "./ReviewForm";
 import "./Detail.css";
 import NavBar from "./NavBar";
 
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 const renderStars = (rating) => {
   const stars = [];

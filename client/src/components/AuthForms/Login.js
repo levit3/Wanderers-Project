@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 const FormSchema = yup.object().shape({
   username: yup.string().required("Username is required"),

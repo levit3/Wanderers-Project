@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 const ReviewForm = ({
   setReviews,

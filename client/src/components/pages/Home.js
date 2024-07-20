@@ -2,7 +2,7 @@ import ReadMore from "./ReadMore";
 import "./Home.css";
 import NavBar from "../NavBar";
 import { useEffect, useState } from "react";
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 const Home = () => {
   const [error, setError] = useState("");

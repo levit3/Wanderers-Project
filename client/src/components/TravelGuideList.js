@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "./List.css";
 
-const API_URL = process.env.SERVER_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_API;
 
 const TravelGuideList = () => {
   const [guides, setGuides] = useState([]);
