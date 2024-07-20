@@ -6,7 +6,7 @@ from sqlalchemy import func
 import re 
 from flask import url_for
 
-from config import db, bcrypt
+from server.config import db, bcrypt
 
 
 # Models go here!
