@@ -45,7 +45,7 @@ class User(db.Model, SerializerMixin):
             not re.search(r"[\W_]", password)
         ):
             raise ValueError(
-                'Password MUST be at least 8 digits, iclude uppercase, lowercase, numbers & special characters.'
+                'Password MUST be at least 8 digits, include uppercase, lowercase, numbers & special characters.'
             )
 
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
