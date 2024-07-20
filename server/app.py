@@ -6,7 +6,6 @@
 from flask import request, make_response, send_from_directory, session
 from flask_restful import Resource
 import os
-import re
 
 
 # Local imports

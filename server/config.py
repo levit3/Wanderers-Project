@@ -8,6 +8,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
+from flask_session import Session
 import os
 
 # Local imports
@@ -21,6 +22,7 @@ app.config["SESSION_COOKIE_SAMESITE"] = None
 app.config["SESSION_COOKIE_SECURE"] = True
 app.config["UPLOAD_FOLDER"] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png', 'gif'}
+app.config['SESSION_TYPE'] = 'sqlalchemy'
 
 
 app.json.compact = False
@@ -32,6 +34,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
+app.config['SESSION_SQLALCHEMY'] = db
 
 
 bcrypt = Bcrypt(app)
@@ -42,5 +45,6 @@ api = Api(app)
 # Instantiate CORS
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}},)
 
+Session(app)
 
 
