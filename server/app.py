@@ -131,7 +131,7 @@ class DestinationByID(Resource):
             return make_response({'error': 'Destination not found'}, 404)
       
 ### Route for images ###
-@app.route('/static/uploads/<filename>')
+@app.route('/api/static/uploads/<filename>')
 def uploads(filename):
     return send_from_directory('uploads', filename)
     
