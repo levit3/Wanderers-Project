@@ -63,8 +63,6 @@ class Destinations(Resource):
         return make_response(destinations, 200)
     
     def post(self):
-
-        
         try:
             destination = Destination(name=request.form.get('name'), location=request.form.get('location'), description=request.form.get('description'), image=request.form.get('link'), link=request.form.get('link'))
             db.session.add(destination)
