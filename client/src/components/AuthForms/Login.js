@@ -61,7 +61,10 @@ const Login = () => {
                 className="input"
                 placeholder="Username"
                 value={values.username}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setErrorMessage("");
+                }}
               />
               <ErrorMessage
                 name="username"
@@ -75,7 +78,10 @@ const Login = () => {
                 className="input"
                 placeholder="Password"
                 value={values.password}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setErrorMessage("");
+                }}
               />
               <ErrorMessage
                 name="password"
