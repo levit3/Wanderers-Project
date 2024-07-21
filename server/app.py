@@ -19,7 +19,7 @@ def get_next_filename(ext):
     for filename in existing_files:
         count+=1
     next_number = count
-    new_filename = f"Untitled design ({next_number}).{ext}"
+    new_filename = f"Untitled design ({next_number}){ext}"
     return new_filename
 
 def allowed_file(filename):
