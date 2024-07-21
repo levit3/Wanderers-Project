@@ -47,4 +47,3 @@ CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}},)
 
 Session(app)
 
-
