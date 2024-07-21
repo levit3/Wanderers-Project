@@ -233,7 +233,7 @@ const TravelGuideList = () => {
             </button>
           </form>
 
-          {showForm && (
+          {loggedIn && showForm && (
             <Formik
               initialValues={{
                 name: "",
@@ -242,15 +242,6 @@ const TravelGuideList = () => {
                 image: null,
                 imageUrl: "",
               }}
-              // {loggedIn && showForm && (
-              //   <Formik
-              //     initialValues={{
-              //       name: "",
-              //       description: "",
-              //       location: "",
-              //       image: null,
-              //       imageUrl: "",
-              //     }}
               validate={validateForm}
               onSubmit={handleSubmit}
             >
@@ -374,16 +365,12 @@ const TravelGuideList = () => {
             ))}
           </main>
         </div>
-        {
+
+        {loggedIn && (
           <div className="fab-container">
             <button className="fab" onClick={() => setShowMenu(!showMenu)}>
               +
             </button>
-            {/* {loggedIn && (
-          <div className="fab-container">
-            <button className="fab" onClick={() => setShowMenu(!showMenu)}>
-              +
-            </button> */}
             {showMenu && (
               <div className="fab-menu">
                 <button
@@ -403,7 +390,7 @@ const TravelGuideList = () => {
               </div>
             )}
           </div>
-        }
+        )}
       </div>
       {showMyPosts && (
         <MyPosts
