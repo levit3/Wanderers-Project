@@ -151,10 +151,12 @@ const TravelGuideList = () => {
     ) {
       errors.image = "Unsupported file format";
     }
-    if (values.imageUrl && !/^https?:\/\/.+\.$/.test(values.imageUrl)) {
+    if (
+      values.imageUrl &&
+      !/^https?:\/\/[\w-]+(\.[\w-]+)+([/?].*)?$/.test(values.imageUrl)
+    ) {
       errors.imageUrl = "Invalid URL";
     }
-    return errors;
   };
 
   // Handle form submission
