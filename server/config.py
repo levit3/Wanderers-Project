@@ -13,7 +13,7 @@ import os
 import redis
 
 # Local imports
-UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', '/server/uploads')
+UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', './uploads')
 
 # Instantiate app, set attributes
 app = Flask(__name__)
