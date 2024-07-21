@@ -112,6 +112,7 @@ database management, and JWT (JSON Web Tokens) for secure authentication.
   ## Database Integration 
     . db.py: Initializes and configures the SQLAlchemy database connection.
     . migrations/: Directory for SQLAlchemy migrations.
+    . For deployment, we have used POSTgresql 14 for this project.
  
  ## Authentication and Authorization:
     
@@ -205,7 +206,7 @@ review submission), ensuring seamless data flow between the frontend and backend
    reviews, and interact with the features seamlessly.
 
 # Deployment and Maintenance
-# Deployment
+# Personal Deployment
 1. Backend Deployment
    . Deploy the Flask backend to a platform like Heroku or AWS EC2.
    . Ensure database configurations and environment variables are properly set.
@@ -213,6 +214,11 @@ review submission), ensuring seamless data flow between the frontend and backend
 2. Frontend Deployment
    . Deploy the React frontend to services like Netlify or Vercel.
    . Optimize assets and enable continuous deployment (CI/CD).
+
+# Current Deployment
+Both the frontend and backend have bbeen deployed on render under the following links.
+. Frontend => **https://wanderers-iqp9.onrender.com**
+. Backend => **https://wanderers-project.onrender.com**
 
 
 ## Monitoring and Maintenance
