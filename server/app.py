@@ -86,9 +86,8 @@ class Destinations(Resource):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
         file.save(file_path)
         
-        data = request.json
         try:
-            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=file_path, link=data['link'])
+            destination = Destination(name=request.form.get('name'), location=request.form.get('location'), description=request.form.get('description'), image=file_path, link=request.form.get('link'))
             db.session.add(destination)
             db.session.commit()
             return make_response(destination.to_dict(), 201)

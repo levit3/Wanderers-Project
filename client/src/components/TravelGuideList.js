@@ -173,7 +173,7 @@ const TravelGuideList = () => {
     try {
       const response = await fetch(`${API_URL}/destinations`, {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: formData,
         credentials: "include",
       });
 
