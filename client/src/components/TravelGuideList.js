@@ -178,7 +178,8 @@ const TravelGuideList = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to post the guide.");
+        const errorMessage = response.json();
+        throw new Error(errorMessage.error);
       }
 
       const data = await response.json();
