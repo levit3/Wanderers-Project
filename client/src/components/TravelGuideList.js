@@ -178,7 +178,7 @@ const TravelGuideList = () => {
       });
 
       if (!response.ok) {
-        const errorMessage = response.json();
+        const errorMessage = await response.json();
         throw new Error(errorMessage.error);
       }
 
