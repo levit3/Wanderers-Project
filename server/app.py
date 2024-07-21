@@ -77,12 +77,12 @@ class Destinations(Resource):
         return make_response(destinations, 200)
     
     def post(self):
-        if 'file' not in request.files:
+        if 'image' not in request.files:
             return make_response({'error': 'No image file provided'}, 400)
-        elif allowed_file(request.files['file'].filename):
+        elif allowed_file(request.files['image'].filename):
             return make_response({'error': 'Invalid image file'}, 400)
         
-        file = request.files['file']
+        file = request.files['image']
         ext = os.path.splitext(file.filename)[1].lower()
         new_filename = get_next_filename(ext)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
