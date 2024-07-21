@@ -13,8 +13,7 @@ import os
 import redis
 
 # Local imports
-path = os.getcwd()
-uploads = os.path.join(path, 'uploads')
+UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'uploads')
 
 # Instantiate app, set attributes
 app = Flask(__name__)
@@ -23,7 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] = True
-app.config["UPLOAD_FOLDER"] = uploads
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png', 'gif'}
 
 redis_url = os.environ.get('REDIS_URL')
