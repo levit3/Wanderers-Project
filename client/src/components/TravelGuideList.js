@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import MyPosts from "./MyPosts";
 import "./List.css";
@@ -18,6 +18,11 @@ const TravelGuideList = () => {
   const [showForm, setShowForm] = useState(false);
   const [showMyPosts, setShowMyPosts] = useState(false);
   const [myPosts, setMyPosts] = useState([]);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-0);
+  };
 
   useEffect(() => {
     fetchGuides();
@@ -121,6 +126,9 @@ const TravelGuideList = () => {
       setNotification(
         "The item you searched did not match any in our database."
       );
+      setTimeout(() => {
+        setNotification("");
+      }, 5000);
     } else {
       setNotification("");
     }
@@ -182,6 +190,10 @@ const TravelGuideList = () => {
         throw new Error(errorMessage.error);
       }
 
+      setTimeout(() => {
+        Error("");
+      }, 5000);
+
       const data = await response.json();
       setGuides((prevGuides) => [...prevGuides, data]);
       setDisplayItem((prevItems) => [...prevItems, data]);
@@ -190,6 +202,9 @@ const TravelGuideList = () => {
       setShowForm(false);
     } catch (error) {
       setNotification(error.message);
+      setTimeout(() => {
+        setNotification("");
+      }, 5000);
     }
 
     setSubmitting(false);
@@ -218,7 +233,7 @@ const TravelGuideList = () => {
             </button>
           </form>
 
-          {loggedIn && showForm && (
+          {showForm && (
             <Formik
               initialValues={{
                 name: "",
@@ -227,12 +242,29 @@ const TravelGuideList = () => {
                 image: null,
                 imageUrl: "",
               }}
+              // {loggedIn && showForm && (
+              //   <Formik
+              //     initialValues={{
+              //       name: "",
+              //       description: "",
+              //       location: "",
+              //       image: null,
+              //       imageUrl: "",
+              //     }}
               validate={validateForm}
               onSubmit={handleSubmit}
             >
               {({ setFieldValue, isSubmitting }) => (
                 <Form className="new-destination-form">
+                  <button
+                    type="button"
+                    className="btn-close-button"
+                    onClick={handleBack}
+                  >
+                    X
+                  </button>
                   <h3>Add New Destination</h3>
+
                   <div className="form-group">
                     <label htmlFor="name">Name:</label>
                     <Field
@@ -272,7 +304,7 @@ const TravelGuideList = () => {
                       className="form-error"
                     />
                   </div>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label htmlFor="image">Image Upload:</label>
                     <input
                       type="file"
@@ -287,7 +319,7 @@ const TravelGuideList = () => {
                       component="div"
                       className="form-error"
                     />
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <label htmlFor="imageUrl">Image URL:</label>
                     <small style={{ fontSize: "15px" }}>
@@ -342,11 +374,16 @@ const TravelGuideList = () => {
             ))}
           </main>
         </div>
-        {loggedIn && (
+        {
           <div className="fab-container">
             <button className="fab" onClick={() => setShowMenu(!showMenu)}>
               +
             </button>
+            {/* {loggedIn && (
+          <div className="fab-container">
+            <button className="fab" onClick={() => setShowMenu(!showMenu)}>
+              +
+            </button> */}
             {showMenu && (
               <div className="fab-menu">
                 <button
@@ -366,7 +403,7 @@ const TravelGuideList = () => {
               </div>
             )}
           </div>
-        )}
+        }
       </div>
       {showMyPosts && (
         <MyPosts

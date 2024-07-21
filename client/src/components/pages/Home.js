@@ -45,7 +45,7 @@ const Home = () => {
     "Welcome to Wanderers! Discover amazing travel destinations and read reviews from fellow travelers.";
 
   return (
-    <>
+    <div className="home-container">
       <div>
         <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <div className="landing-page">
@@ -128,7 +128,7 @@ const Home = () => {
           <p>Phone: +25411456789</p>
         </footer>
       </div>
-    </>
+    </div>
   );
 };
 
