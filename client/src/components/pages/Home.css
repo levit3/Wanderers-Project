@@ -1,3 +1,9 @@
+.home-container {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .landing-page {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -105,21 +111,4 @@
 
 .read-more:hover {
   text-decoration: underline;
-}
-
-.contact {
-  background-color: #009688;
-  color: white;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: center;
-  border-radius: 10px 10px 0 0;
-}
-
-.contact h2 {
-  margin-top: 0;
-}
-
-.contact p {
-  margin: 5px 0;
 }
