@@ -88,7 +88,7 @@ class Destinations(Resource):
         
         data = request.json
         try:
-            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=file_path)
+            destination = Destination(name=data['name'], location=data['location'], description=data['description'], image=file_path, link=data['link'])
             db.session.add(destination)
             db.session.commit()
             return make_response(destination.to_dict(), 201)

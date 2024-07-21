@@ -151,10 +151,7 @@ const TravelGuideList = () => {
     ) {
       errors.image = "Unsupported file format";
     }
-    if (
-      values.imageUrl &&
-      !/^https?:\/\/.+\.(jpeg|jpg|gif|png)$/.test(values.imageUrl)
-    ) {
+    if (values.imageUrl && !/^https?:\/\/.+\.$/.test(values.imageUrl)) {
       errors.imageUrl = "Invalid URL";
     }
     return errors;
@@ -293,7 +290,10 @@ const TravelGuideList = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="imageUrl">Or Image URL:</label>
+                    <label htmlFor="imageUrl">Image URL:</label>
+                    <small style={{ fontSize: "15px" }}>
+                      Preferably for a wide image
+                    </small>
                     <Field
                       type="text"
                       name="imageUrl"
