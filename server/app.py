@@ -77,7 +77,9 @@ class Destinations(Resource):
         return make_response(destinations, 200)
     
     def post(self):
-        if 'file' not in request.files or not allowed_file(request.files['file'].filename):
+        if 'file' not in request.files:
+            return make_response({'error': 'No image file provided'}, 400)
+        elif allowed_file(request.files['file'].filename):
             return make_response({'error': 'Invalid image file'}, 400)
         
         file = request.files['file']
