@@ -10,6 +10,7 @@ from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 import os
+import redis
 
 # Local imports
 
@@ -22,7 +23,12 @@ app.config["SESSION_COOKIE_SAMESITE"] = "False"
 app.config["SESSION_COOKIE_SECURE"] = True
 app.config["UPLOAD_FOLDER"] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png', 'gif'}
-app.config['SESSION_TYPE'] = 'sqlalchemy'
+
+redis_url = os.environ.get('REDIS_URL')
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.from_url(os.environ.get('REDIS_URL'))
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_PERMANENT'] = False
 
 
 app.json.compact = False
@@ -41,10 +47,7 @@ bcrypt = Bcrypt(app)
 
 # Instantiate REST API
 api = Api(app)
+Session(app)
 
 # Instantiate CORS
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}},)
-
-Session(app)
-
-
