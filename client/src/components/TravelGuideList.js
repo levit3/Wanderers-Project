@@ -167,12 +167,8 @@ const TravelGuideList = () => {
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("location", values.location);
-
-    if (values.image) {
-      formData.append("image", values.image);
-    } else if (values.imageUrl) {
-      formData.append("imageUrl", values.imageUrl);
-    }
+    formData.append("image", values.image);
+    formData.append("link", values.imageUrl);
 
     try {
       const response = await fetch(`${API_URL}/destinations`, {
