@@ -18,6 +18,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 flask-session = "*"
 redis = "*"
+boto3 = "*"
 
 [requires]
 python_full_version = "*"

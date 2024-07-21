@@ -325,6 +325,10 @@ const TravelGuideList = () => {
                     guide.id - 1
                   }).png`}
                   alt="imge"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = guide.link;
+                  }}
                 />
                 <h2>{guide.name}</h2>
                 <p>{guide.description}</p>

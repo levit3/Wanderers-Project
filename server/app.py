@@ -13,20 +13,6 @@ from server.config import app, db, api
 # Add your model imports
 from server.models import db, User, Destination, Review
 
-def get_next_filename(ext):
-    existing_files = [f for f in os.listdir(app.config['UPLOAD_FOLDER'])]
-    count = 0
-    for filename in existing_files:
-        count+=1
-    next_number = count
-    new_filename = f"Untitled design ({next_number}){ext}"
-    return new_filename
-
-def allowed_file(filename):
-   if '.' not in filename:
-       return False
-   ext = os.path.splitext(filename)[1].lower()
-   return ext in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/')
 def index():
@@ -77,19 +63,10 @@ class Destinations(Resource):
         return make_response(destinations, 200)
     
     def post(self):
-        if 'image' not in request.files:
-            return make_response({'error': 'No image file provided'}, 400)
-        elif allowed_file(request.files['image'].filename):
-            return make_response({'error': 'Invalid image file'}, 400)
-        
-        file = request.files['image']
-        ext = os.path.splitext(file.filename)[1].lower()
-        new_filename = get_next_filename(ext)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
-        file.save(file_path)
+
         
         try:
-            destination = Destination(name=request.form.get('name'), location=request.form.get('location'), description=request.form.get('description'), image=file_path, link=request.form.get('link'))
+            destination = Destination(name=request.form.get('name'), location=request.form.get('location'), description=request.form.get('description'), image=request.form.get('link'), link=request.form.get('link'))
             db.session.add(destination)
             db.session.commit()
             return make_response(destination.to_dict(), 201)
