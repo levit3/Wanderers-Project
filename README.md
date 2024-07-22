@@ -5,6 +5,12 @@
 The Travel Guide application is a comprehensive web platform that allows users to view 
 and explore travel guides and to also add their reviews for destinations arounf the World
 
+# Current Deployment
+Both the frontend and backend have bbeen deployed on render under the following links.
+. Frontend => **https://wanderers-iqp9.onrender.com**
+. Backend => **https://wanderers-project.onrender.com**
+
+
  # Table of Contents
  1. Overview
  2. Backend(Python/Flask)
@@ -215,10 +221,6 @@ review submission), ensuring seamless data flow between the frontend and backend
    . Deploy the React frontend to services like Netlify or Vercel.
    . Optimize assets and enable continuous deployment (CI/CD).
 
-# Current Deployment
-Both the frontend and backend have bbeen deployed on render under the following links.
-. Frontend => **https://wanderers-iqp9.onrender.com**
-. Backend => **https://wanderers-project.onrender.com**
 
 
 ## Monitoring and Maintenance
