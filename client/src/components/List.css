@@ -22,6 +22,7 @@
   font-family: "Roboto", sans-serif;
   max-width: 600px;
 }
+
 .btn-close-button {
   top: 10px;
   right: 10px;
@@ -342,6 +343,20 @@
   background-color: #aaa;
   cursor: not-allowed;
 }
+.btn-close-button {
+  align-self: flex-end;
+  background: #ff5a5f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-close-button:hover {
+  color: #ff0000;
+}
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
@@ -414,36 +429,27 @@
   overflow-y: auto;
 }
 
-/* .close-button {
-  align-self: flex-end;
+.close-button {
   background: #ff5a5f;
   color: white;
+  margin-top: calc(18vh - 100px);
+  margin-bottom: 0px;
+  position: sticky;
   border: none;
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  border-radius: 5px;
-} */
-.btn-close-button {
-  align-self: flex-end;
-  background: #ff5a5f;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-bottom: 20px;
   cursor: pointer;
   border-radius: 5px;
 }
 
-.btn-close-button:hover {
+.close-button:hover {
   color: #ff0000;
 }
 
 .post-card {
-  background: white;
+  background: rgb(233, 233, 233);
   border-radius: 10px;
   padding: 20px;
-  margin: 10px;
+  margin-top: 0px;
+  margin-bottom: 20px;
   width: 80%;
   max-width: 500px;
   display: flex;
@@ -459,6 +465,21 @@
 
 .edit-post-form {
   width: 100%;
+}
+
+.save-button {
+  background-color: #6200ea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.save-button:hover {
+  background-color: #3700b3;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .edit-post-form .form-group {
@@ -478,9 +499,9 @@
   border-radius: 5px;
 }
 
-.edit-button,
-.delete-button {
-  background: #007bff;
+.edit-buttton,
+.delete-buttton {
+  background: #ff5a5f;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -489,8 +510,9 @@
   border-radius: 5px;
 }
 
-.delete-button {
-  background: #ff5a5f;
+.edit-buttton:hover,
+.delete-buttton:hover {
+  background: #cd3137;
 }
 
 .form-error {

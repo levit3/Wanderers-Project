@@ -61,12 +61,26 @@ const TravelGuideList = () => {
 
   const fetchMyPosts = async () => {
     try {
-      const response = await fetch(`${API_URL}/my-posts`, {
+      const response = await fetch(`${API_URL}/destinations`, {
         credentials: "include",
       });
-      const data = await response.json();
-      setMyPosts(data);
-      setShowMyPosts(true);
+
+      // Log the response to inspect it
+      console.log(response);
+
+      // Check if the response is ok
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const data = await response.json();
+        setMyPosts(data);
+        setShowMyPosts(true);
+      } else {
+        throw new Error("Received non-JSON response");
+      }
     } catch (error) {
       console.error("Error fetching my posts:", error);
     }
@@ -84,7 +98,7 @@ const TravelGuideList = () => {
 
   const handleEditPost = async (id, updatedPost) => {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
+      const response = await fetch(`${API_URL}/destinations/${id}`, {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -102,7 +116,7 @@ const TravelGuideList = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      const response = await fetch(`${API_URL}/posts/${id}`, {
+      const response = await fetch(`${API_URL}/destinations/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
