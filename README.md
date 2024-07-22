@@ -45,6 +45,18 @@ The backend of the Travel Guide Application is built using Python and Flask fram
 a RESTful API for managing user authentication, travel guides, and reviews. SQLAlchemy is used for 
 database management, and JWT (JSON Web Tokens) for secure authentication.
 
+## Technologies used
+### Backend
+- Flask
+- Redis
+- Bcrypt
+
+### Frontend
+- Bootstrap
+- React
+- Formik
+- Yup
+
 # Setup
 1. Clone the Repository
 
